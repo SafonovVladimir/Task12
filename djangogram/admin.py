@@ -14,7 +14,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('id', 'author', 'created_at', 'updated_at', 'likes')
+    list_display = ('id', 'author', 'created_at', 'updated_at', 'num_of_likes')
     list_display_links = ('id', 'author')
     search_fields = ('user',)
     save_on_top = True
@@ -38,7 +38,7 @@ class ImageAdmin(admin.ModelAdmin):
 
 
 class LikeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'post', 'is_liked')
+    list_display = ('id', 'user', 'post')
     list_display_links = ('id', 'user')
     search_fields = ('title',)
     save_on_top = True
