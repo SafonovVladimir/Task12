@@ -5,7 +5,8 @@ from .views import *
 urlpatterns = [
     path('', PostsView.as_view(), name='home'),
     path('profile/', profile, name='users_profile'),
-    # path('profile/<slug:user>/', profile, name='users_profile'),
-    # path('profile/<user_name>/', PostsView.as_view(), name='user'),
-    # path('', ViewPosts.as_view(), name='home'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('add_post/', add_post, name='add_post'),
+    path('register/', register, name='register'),
 ]
