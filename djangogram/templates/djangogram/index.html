@@ -22,7 +22,7 @@
             </div>
             <div class="card-footer text-muted">
                 {{ item.updated_at|date:"Y-m-d H:i:s" }}<br>
-                Позначки "Подобається": {{ item.likes }}<br>
+                Likes: {{ item.likes.count }}<br>
                 {{ item.tags }}
             </div>
         </div>

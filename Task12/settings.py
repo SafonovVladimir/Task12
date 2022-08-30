@@ -156,3 +156,12 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
     }
 }
+
+
+DB_FILES = {
+    'db_table': 'FILES',
+    'fname_column':  'FILE_NAME',
+    'blob_column': 'BLOB',
+    'size_column': 'SIZE',
+    'base_url': 'http://localhost/dbfiles/'
+}
