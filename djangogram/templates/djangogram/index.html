@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+
+{% block content %}
+    {% for item in posts %}
+        <div class="card mx-5">
+            <div class="card-header">
+                <a style="text-decoration:none" href="{{ item.user.get_absolute_url }}">{{ item.author }}</a>
+            </div>
+            <div class="card-body">
+                <div class="media">
+                    <img src="{{ item.image_.url }}" alt="" width="480" class="mr-3">
+                    <div class="media-body">
+                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:20 }}
+                            <a style="text-decoration:none" href="{{ item.get_absolute_url }}">більше</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                {{ item.updated_at|date:"Y-m-d H:i:s" }}<br>
+                Позначки "Подобається": {{ item.likes }}<br>
+                {{ item.tags }}
+            </div>
+        </div>
+        <br>
+    {% endfor %}
+{% endblock %}
