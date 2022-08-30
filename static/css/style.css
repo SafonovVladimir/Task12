@@ -1,6 +1,21 @@
-body{
+body {
     background-color: #ffffff;
 }
-.errorlist{
+
+.errorlist {
     color: red;
+}
+
+.buttonPositive {
+    background-color: green;
+    border: solid green 1px;
+}
+
+.buttonNegative {
+    background-color: red;
+    border: solid red 1px;
+}
+
+.test {
+    border: solid black 3px;
 }
