@@ -1,1 +1,1 @@
-web: gunicorn Task12:wsgi
+web: gunicorn Task12.wsgi
