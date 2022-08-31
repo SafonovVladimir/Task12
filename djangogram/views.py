@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import UserLoginForm, UserRegisterForm, AddPostForm
 from .models import *
@@ -25,13 +25,15 @@ def profile(request, username):
         return render(request, 'djangogram/profile.html', context)
 
 
-def index(request):
-    post = Post.objects.all()
+def view_post(request, post_id):
+    # post_item = Post.objects.get(pk=post_id)
+    post_item = get_object_or_404(Post, pk=post_id)
+    image = Image.objects.filter(post_id=post_id)
     context = {
-        'posts': post,
-        'title': 'Posts',
+        'item': post_item,
+        'image': image,
     }
-    return render(request, template_name='djangogram/index.html', context=context)
+    return render(request, template_name='djangogram/view_post.html', context=context)
 
 
 # class PostsView(ListView):
@@ -47,7 +49,7 @@ def index(request):
 #                                                      "image": image})
 
 
-def post_view(request):
+def index(request):
     posts = Post.objects.all()
     user = request.user
 
@@ -55,7 +57,7 @@ def post_view(request):
         'posts': posts,
         'user': user,
     }
-    return render(request, "djangogram/index.html", context)
+    return render(request, "djangogram/index.html", context=context)
 
 
 def like_post(request):

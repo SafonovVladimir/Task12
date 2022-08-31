@@ -19,3 +19,18 @@ body {
 .test {
     border: solid black 3px;
 }
+
+.img_row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 500px;
+    height: 400px;
+    align-content: space-between;
+}
+
+.round_photo {
+    border-radius: 100px;
+    border: 3px solid green;
+    box-shadow: 0 0 7px #666;
+}

@@ -1,18 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Profile Page | {{ user.username }} {% endblock title %}
-<style>
-.round_photo {
-border-radius: 100px; /* Радиус скругления */
-border: 3px solid green; /* Параметры рамки */
-box-shadow: 0 0 7px #666; /* Параметры тени */
-}
-</style>
+
 {% block content %}
     <div class="row my-3 p-3">
         <h1>This is the profile page for {{ user.username }}</h1>
     </div>
 
-    <div>
+    <div class="round_photo">
         <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
         <b>{{ posts.count }}</b> posts
     </div>
@@ -24,14 +18,19 @@ box-shadow: 0 0 7px #666; /* Параметры тени */
     <p>{{ profile.bio }}</p>
     <br>
     <p><b>POSTS:</b></p>
-    {% for item in posts %}
-        {% if item.post.all.count > 1 %}
-            <img src="{{ item.post.first.image.url }}" alt="" width="200" class="mr-3">
-        {% else %}
-            <img src="{{ item.post.get.image.url }}" alt="" width="200" class="mr-3">
-        {% endif %}
-    {% endfor %}
-
+    <div class="img_row">
+        {% for item in posts %}
+            {% if item.post.all.count > 1 %}
+                <a href="../post/{{ item.pk }}">
+                    <img src="{{ item.post.first.image.url }}" alt="" width="300" class="mr-3"
+                         style="vertical-align:middle;margin:10px 50px"></a>
+            {% else %}
+                <a href="../post/{{ item.pk }}">
+                    <img src="{{ item.post.get.image.url }}" alt="" width="300" class="mr-3"
+                         style="vertical-align:middle;margin:10px 50px"></a>
+            {% endif %}
+        {% endfor %}
+    </div>
 
 
 {% endblock content %}
