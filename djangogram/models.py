@@ -4,7 +4,6 @@ from itertools import count
 from django.db import models
 from django.contrib.auth.models import User
 
-
 GENDER_CHOISES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
@@ -45,7 +44,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Змінено')
     content = models.TextField("Що у вас нового", blank=True)
     liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=0, blank=True, related_name='liked')
-    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tag')
+    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tag', blank=True)
 
     def __str__(self):
         return str(self.pk)
@@ -58,6 +57,13 @@ class Post(models.Model):
     def num_of_likes(self):
         return self.liked.all().count()
 
+
+LIKE_CHOISES = (
+    ('Like', 'Like'),
+    ('Unlike', 'Unlike'),
+)
+
+
 class Image(models.Model):
     post = models.ForeignKey(Post, verbose_name="Post", on_delete=models.CASCADE, related_name='post')
     image = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name='Фото', blank=True)
@@ -69,10 +75,6 @@ class Image(models.Model):
         verbose_name = "Image"
         verbose_name_plural = "Images"
 
-LIKE_CHOISES = (
-    ('Like', 'Like'),
-    ('Unlike', 'Unlike'),
-)
 
 class Like(models.Model):
     user = models.ForeignKey(User, verbose_name="User", on_delete=models.CASCADE)
