@@ -7,6 +7,7 @@
 
 {% block content %}
     {% for item in posts %}
+        {{ first_image }}
         <div class="card mx-5">
             <div class="card-header">
                 <a style="text-decoration:none" href="{{ item.user.get_absolute_url }}">{{ item.author }}</a>
@@ -15,13 +16,13 @@
                 <div class="media">
 
                     {% if item.post.all.count > 1 %}
-                        {% for image in item.post.all %}
-                            <img src="{{ image.image.url }}" alt="" width="480" class="mr-3">
-                        {% endfor %}
+                        <img src="{{ item.post.first.image.url }}" alt="" width="480" class="mr-3">
+                        <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
+{#                        {% for image in item.post.all %}#}
+{#                            <img src="{{ image.image.url }}" alt="" width="50" class="mr-3">#}
+{#                        {% endfor %}#}
                     {% else %}
-                        {% for image in item.post.all %}
-                            <img src="{{ image.image.url }}" alt="" width="480" class="mr-3">
-                        {% endfor %}
+                        <img src="{{ item.post.get.image.url }}" alt="" width="480" class="mr-3">
                     {% endif %}
 
                     <div class="media-body">
