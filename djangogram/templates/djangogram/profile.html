@@ -1,11 +1,37 @@
 {% extends "base.html" %}
-{% block title %}Profile Page | {{user.username}} {% endblock title %}
+{% block title %}Profile Page | {{ user.username }} {% endblock title %}
+<style>
+.round_photo {
+border-radius: 100px; /* Радиус скругления */
+border: 3px solid green; /* Параметры рамки */
+box-shadow: 0 0 7px #666; /* Параметры тени */
+}
+</style>
 {% block content %}
     <div class="row my-3 p-3">
         <h1>This is the profile page for {{ user.username }}</h1>
     </div>
 
-<p>{{ user.photo }}</p><br>
-<p>{{ user.updated_at }}</p><br>
+    <div>
+        <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
+        <b>{{ posts.count }}</b> posts
+    </div>
+    <br>
+    <p><b>{{ profile.full_name }}</b></p>
+    <p>{{ profile.e_mail }}</p>
+    <p>{{ profile.birthday }}</p>
+    <p>{{ profile.gender }}</p>
+    <p>{{ profile.bio }}</p>
+    <br>
+    <p><b>POSTS:</b></p>
+    {% for item in posts %}
+        {% if item.post.all.count > 1 %}
+            <img src="{{ item.post.first.image.url }}" alt="" width="200" class="mr-3">
+        {% else %}
+            <img src="{{ item.post.get.image.url }}" alt="" width="200" class="mr-3">
+        {% endif %}
+    {% endfor %}
+
+
 
 {% endblock content %}

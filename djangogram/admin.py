@@ -7,10 +7,18 @@ admin.site.site_header = 'Управление Djangogram'
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo')
+    list_display = ('id', 'user', 'full_name', 'e_mail', 'birthday', 'gender', 'bio', 'get_photo')
     list_display_links = ('id', 'user', 'full_name')
     search_fields = ('user', 'full_name')
     save_on_top = True
+
+    def get_photo(self, obj):
+        if obj.photo:
+            return mark_safe(f'<img src="{obj.photo.url}" width="75">')
+        else:
+            return '---'
+
+    get_photo.short_description = 'Миниатюра'
 
 
 class PostAdmin(admin.ModelAdmin):

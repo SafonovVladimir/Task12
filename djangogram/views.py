@@ -1,17 +1,28 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
 
 from .forms import UserLoginForm, UserRegisterForm, AddPostForm
 from .models import *
 
 
 @login_required
-def profile(request):
-    return render(request, 'djangogram/profile.html')
+def profile(request, username):
+    if username == str(request.user):
+        user = request.user
+        user_id = user.id
+        profile = Profile.objects.get(user=user_id)
+        posts = Post.objects.filter(author=user)
+        images = Image.objects.filter(post__author=user)
+
+        context = {
+            'user': user,
+            'profile': profile,
+            'posts': posts,
+            'images': images,
+        }
+        return render(request, 'djangogram/profile.html', context)
 
 
 def index(request):
@@ -45,6 +56,7 @@ def post_view(request):
         'user': user,
     }
     return render(request, "djangogram/index.html", context)
+
 
 def like_post(request):
     user = request.user

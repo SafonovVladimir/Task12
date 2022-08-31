@@ -7,7 +7,6 @@
 
 {% block content %}
     {% for item in posts %}
-        {{ first_image }}
         <div class="card mx-5">
             <div class="card-header">
                 <a style="text-decoration:none" href="{{ item.user.get_absolute_url }}">{{ item.author }}</a>
@@ -18,9 +17,6 @@
                     {% if item.post.all.count > 1 %}
                         <img src="{{ item.post.first.image.url }}" alt="" width="480" class="mr-3">
                         <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
-{#                        {% for image in item.post.all %}#}
-{#                            <img src="{{ image.image.url }}" alt="" width="50" class="mr-3">#}
-{#                        {% endfor %}#}
                     {% else %}
                         <img src="{{ item.post.get.image.url }}" alt="" width="480" class="mr-3">
                     {% endif %}
@@ -41,7 +37,7 @@
                     {% else %}
                         <button class="buttonNegative" type="submit">Unlike</button>
                     {% endif %}
-                    {{ item.num_of_likes }} likes<br>
+                    <b>{{ item.num_of_likes }} likes</b><br>
                 </form>
                 {% for tag in item.tags.all %}
                     <a href="{{ item.tag.get_absolute_url }}">{{ tag }}</a>
