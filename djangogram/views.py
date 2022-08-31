@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import UserLoginForm, UserRegisterForm, AddPostForm
+from .forms import UserLoginForm, UserRegisterForm
 from .models import *
 
 
@@ -83,17 +83,17 @@ def like_post(request):
     return redirect('home')
 
 
-def add_post(request):
-    if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Success')
-            return redirect('home')
-    else:
-        form = AddPostForm()
-    return render(request, "djangogram/index.html", {"form": form})
+# def add_post(request):
+#     if request.method == 'POST':
+#         form = AddPostForm(request.POST, request.FILES)
+#
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Success')
+#             return redirect('home')
+#     else:
+#         form = AddPostForm()
+#     return render(request, "djangogram/index.html", {"form": form})
 
 
 def user_login(request):

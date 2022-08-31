@@ -43,7 +43,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Створено')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Змінено')
     content = models.TextField("Що у вас нового", blank=True)
-    liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=0, blank=True, related_name='liked')
+    liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True, related_name='liked')
     tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tag', blank=True)
 
     def __str__(self):
