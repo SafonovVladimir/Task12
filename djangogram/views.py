@@ -3,8 +3,19 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, AddPostForm
 from .models import *
+
+
+def index(request):
+    posts = Post.objects.all().order_by('-updated_at')
+    user = request.user
+
+    context = {
+        'posts': posts,
+        'user': user,
+    }
+    return render(request, "djangogram/index.html", context=context)
 
 
 @login_required
@@ -49,17 +60,6 @@ def view_post(request, post_id):
 #                                                      "image": image})
 
 
-def index(request):
-    posts = Post.objects.all()
-    user = request.user
-
-    context = {
-        'posts': posts,
-        'user': user,
-    }
-    return render(request, "djangogram/index.html", context=context)
-
-
 def like_post(request):
     user = request.user
     if request.method == 'POST':
@@ -83,17 +83,17 @@ def like_post(request):
     return redirect('home')
 
 
-# def add_post(request):
-#     if request.method == 'POST':
-#         form = AddPostForm(request.POST, request.FILES)
-#
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Success')
-#             return redirect('home')
-#     else:
-#         form = AddPostForm()
-#     return render(request, "djangogram/index.html", {"form": form})
+def add_post(request):
+    if request.method == 'POST':
+        form = AddPostForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Success')
+            return redirect('home')
+    else:
+        form = AddPostForm()
+    return render(request, "djangogram/index.html", {"form": form})
 
 
 def user_login(request):

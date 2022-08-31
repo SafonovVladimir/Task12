@@ -4,10 +4,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
 
-# class AddPostForm(forms.ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = ("content", "tags")
+class AddPostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ("content", "tags")
 
 
 class UserLoginForm(AuthenticationForm):
