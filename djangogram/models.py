@@ -1,10 +1,10 @@
 from datetime import date
-from itertools import count
-
+from PIL import Image as Im
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
-GENDER_CHOISES = (
+GENDER_CHOICES = (
     ('Male', 'Male'),
     ('Female', 'Female'),
 )
@@ -15,7 +15,7 @@ class Profile(models.Model):
     full_name = models.CharField("Повне ім'я", blank=True, max_length=150)
     e_mail = models.EmailField("E-mail")
     birthday = models.DateField("Дата народження", default=date.today, blank=True)
-    gender = models.CharField("Стать", choices=GENDER_CHOISES, max_length=6, blank=True, default=None)
+    gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, default=None)
     bio = models.TextField("Про себе", blank=True)
     photo = models.ImageField('Фото', upload_to='photos/%Y/%m/%d', blank=True)
 
@@ -43,8 +43,9 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Створено')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Змінено')
     content = models.TextField("Що у вас нового", blank=True)
-    liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True, related_name='liked')
-    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tag', blank=True)
+    liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True,
+                                   related_name='liked')
+    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tags', blank=True)
 
     def __str__(self):
         return str(self.pk)
@@ -67,6 +68,18 @@ LIKE_CHOISES = (
 class Image(models.Model):
     post = models.ForeignKey(Post, verbose_name="Post", on_delete=models.CASCADE, related_name='post')
     image = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name='Фото', blank=True)
+
+    def save(
+        self, force_insert=False, force_update=False, using=None, update_fields=None
+    ):
+        super().save()
+        img = Im.open(self.image.path)
+        # resize
+        if img.height != 1080 or img.width != 300:
+            output_size = (1080, 1080)
+            # output_name = str(uuid.uuid4())
+            img.thumbnail(output_size)
+            img.save(self.image.path)
 
     def __str__(self):
         return str(self.post)

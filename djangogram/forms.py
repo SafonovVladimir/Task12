@@ -1,5 +1,5 @@
 from django import forms
-from .models import *
+from .models import Post, Tag, Image
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -7,7 +7,13 @@ from django.contrib.auth.models import User
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ("content", "tags")
+        fields = ['author', 'content', 'tags']
+        # widgets = {
+        #     'author': forms.ChoiceField(),
+        #     'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+        #     'tags': forms.MultipleChoiceField(),
+        # }
+
 
 
 class UserLoginForm(AuthenticationForm):

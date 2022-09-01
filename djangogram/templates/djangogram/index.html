@@ -9,7 +9,7 @@
     {% for item in posts %}
         <div class="card mx-5">
             <div class="card-header">
-                <a style="text-decoration:none" href="{{ item.user.get_absolute_url }}">{{ item.author }}</a>
+                <a style="text-decoration:none" href="{% url 'user_posts' item.author %}">{{ item.author }}</a>
             </div>
             <div class="card-body">
                 <div class="media">
@@ -40,7 +40,7 @@
                     <b>{{ item.num_of_likes }} likes</b><br>
                 </form>
                 {% for tag in item.tags.all %}
-                    <a href="{{ item.tag.get_absolute_url }}">{{ tag }}</a>
+                    <a href="{% url 'tag_posts' tag.url %}">{{ tag.title }}</a>
                 {% endfor %}
             </div>
         </div>

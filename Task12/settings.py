@@ -77,8 +77,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Task12.wsgi.application'
 
 db_config = dj_database_url.config(
-    default='postgres://hajufzuecfnsiu:af26d0cb4bfaeeea3c9fdbb933de17fecf589f7f991ab7cfffc210028633f51e'
-            '@ec2-54-77-40-202.eu-west-1.compute.amazonaws.com:5432/d5sk9gt8vjc4p2')
+    default='postgres://wpyindjezdaokr:9a68dcc2286670f88a23d08129f2042e44cf54b2c6db813334fe177fcc06322b@'
+            'ec2-52-211-182-159.eu-west-1.compute.amazonaws.com:5432/d8fdehua5pbljp')
 db_config['ATOMIC_REQUESTS'] = True
 
 DATABASES = {

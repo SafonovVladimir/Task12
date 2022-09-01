@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
+from django_extensions.admin import ForeignKeyAutocompleteAdmin
+
 from .models import *
 
 admin.site.site_title = 'Управление Djangogram'

@@ -1,11 +1,22 @@
 {% extends "base.html" %}
+
 {% block title %}Add new post{% endblock title %}
+
 {% block content %}
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
+        {#        {{ form.as_p }}#}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                <div class="invalid-feedback">
+                    {{ field.errors }}
+                </div>
+            </div>
+        {% endfor %}
+        <br><button type="submit">Upload</button>
     </form>
 
 {% endblock content %}

@@ -18,6 +18,26 @@ def index(request):
     return render(request, "djangogram/index.html", context=context)
 
 
+def get_user_posts(request, author):
+    user_id = User.objects.get(username=author).id
+    posts = Post.objects.filter(author=user_id).order_by('-updated_at')
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, "djangogram/index.html", context=context)
+
+
+def get_tag_posts(request, tag):
+    tag_id = Tag.objects.get(url=tag).id
+    posts = Post.objects.filter(tags=tag_id).order_by('-updated_at')
+
+    context = {
+        'posts': posts,
+    }
+    return render(request, "djangogram/index.html", context=context)
+
+
 @login_required
 def profile(request, username):
     if username == str(request.user):
@@ -41,23 +61,10 @@ def view_post(request, post_id):
     post_item = get_object_or_404(Post, pk=post_id)
     image = Image.objects.filter(post_id=post_id)
     context = {
-        'item': post_item,
+        'post': post_item,
         'image': image,
     }
     return render(request, template_name='djangogram/view_post.html', context=context)
-
-
-# class PostsView(ListView):
-#     '''Список постів'''
-#     model = Post
-#     template_name = 'djangogram/index.html'
-#     context_object_name = 'posts'
-
-# def get_post(self, request):
-#     posts = Post.objects.all()
-#     image = Image.objects.all()
-#     return render(request, "djangogram/index.html", {"posts": posts,
-#                                                      "image": image})
 
 
 def like_post(request):
@@ -86,14 +93,13 @@ def like_post(request):
 def add_post(request):
     if request.method == 'POST':
         form = AddPostForm(request.POST, request.FILES)
-
         if form.is_valid():
             form.save()
             messages.success(request, 'Success')
             return redirect('home')
     else:
         form = AddPostForm()
-    return render(request, "djangogram/index.html", {"form": form})
+    return render(request, "djangogram/add_post.html", {"form": form})
 
 
 def user_login(request):
