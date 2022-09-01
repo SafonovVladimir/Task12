@@ -7,13 +7,27 @@ from django.contrib.auth.models import User
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['author', 'content', 'tags']
-        # widgets = {
-        #     'author': forms.ChoiceField(),
-        #     'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-        #     'tags': forms.MultipleChoiceField(),
-        # }
+        fields = ['author', 'content']
+        widgets = {
+            'author': forms.Select(attrs={"class": "form-control"}),
+            'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+        }
 
+
+# class AddTagForm(forms.ModelForm):
+#     class Meta:
+#         model = Tag
+#         fields = ['title']
+#         widgets = {
+#             'title': forms.TextInput(attrs={"class": "form-control"}),
+#         }
+
+
+class AddImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        exclude = ('post', )
+        fields = ['image']
 
 
 class UserLoginForm(AuthenticationForm):

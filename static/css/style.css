@@ -1,6 +1,6 @@
 body {
     background-color: #ffffff;
-    padding: 10px 30px 10px 30px;
+    padding: 0 200px 0 200px;
 }
 
 .errorlist {
@@ -9,7 +9,7 @@ body {
 
 .buttonPositive {
     background-color: green;
-    border: solid green 1px;
+    border: solid green 3px;
 }
 
 .buttonNegative {
@@ -32,6 +32,5 @@ body {
 
 .round_photo {
     border-radius: 100px;
-    border: 3px solid green;
-    box-shadow: 0 0 7px #666;
+    box-shadow: 0 0 10px grey;
 }

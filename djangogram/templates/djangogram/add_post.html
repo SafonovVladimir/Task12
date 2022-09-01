@@ -6,17 +6,20 @@
 
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {#        {{ form.as_p }}#}
-        {% for field in form %}
-            <div class="form-group">
-                {{ field.label_tag }}
-                {{ field }}
-                <div class="invalid-feedback">
-                    {{ field.errors }}
-                </div>
-            </div>
-        {% endfor %}
-        <br><button type="submit">Upload</button>
+        {{ post.as_p }}
+{#        {{ tag.as_p }}#}
+        {{ image.as_p }}
+        {#        {% for field in form %}#}
+        {#            <div class="form-group">#}
+        {#                {{ field.label_tag }}#}
+        {#                {{ field }}#}
+        {#                <div class="invalid-feedback">#}
+        {#                    {{ field.errors }}#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        {% endfor %}#}
+        <br>
+        <button type="submit">Add post</button>
     </form>
 
 {% endblock content %}

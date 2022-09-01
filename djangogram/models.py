@@ -27,8 +27,8 @@ class Profile(models.Model):
 
 
 class Tag(models.Model):
-    title = models.CharField('Назва', max_length=50)
-    url = models.SlugField(max_length=100, unique=True)
+    title = models.CharField('Назва', max_length=50, blank=True)
+    url = models.SlugField(max_length=100, unique=True, blank=True)
 
     def __str__(self):
         return self.title

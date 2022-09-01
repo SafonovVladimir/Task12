@@ -9,16 +9,17 @@
     {% for item in posts %}
         <div class="card mx-5">
             <div class="card-header">
-                <a style="text-decoration:none" href="{% url 'user_posts' item.author %}">{{ item.author }}</a>
+                <img src="{{ photo.url }}" alt="" width="30" class="round_photo">
+                <a style="text-decoration:none" href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">
                 <div class="media">
 
                     {% if item.post.all.count > 1 %}
-                        <img src="{{ item.post.first.image.url }}" alt="" width="480" class="mr-3">
+                        <img src="{{ item.post.first.image.url }}" alt="" width="500" class="mr-3">
                         <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
                     {% else %}
-                        <img src="{{ item.post.get.image.url }}" alt="" width="480" class="mr-3">
+                        <img src="{{ item.post.get.image.url }}" alt="" width="500" class="mr-3">
                     {% endif %}
 
                     <div class="media-body">
