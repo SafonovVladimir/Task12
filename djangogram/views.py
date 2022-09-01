@@ -9,12 +9,12 @@ from .models import *
 
 def index(request):
     posts = Post.objects.all().order_by('-updated_at')
+    profiles = Profile.objects.all()
     user = request.user
-    photo = Profile.objects.get(user=user).photo
     context = {
         'posts': posts,
         'user': user,
-        'photo': photo,
+        'profiles': profiles,
     }
     return render(request, "djangogram/index.html", context=context)
 

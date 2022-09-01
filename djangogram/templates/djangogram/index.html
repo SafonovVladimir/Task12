@@ -9,7 +9,11 @@
     {% for item in posts %}
         <div class="card mx-5">
             <div class="card-header">
-                <img src="{{ photo.url }}" alt="" width="30" class="round_photo">
+                {% for prof in profiles %}
+                    {% if item.author == prof.user %}
+                        <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
+                    {% endif %}
+                {% endfor %}
                 <a style="text-decoration:none" href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">

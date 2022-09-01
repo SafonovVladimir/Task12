@@ -7,9 +7,11 @@
 
 {% block content %}
     <div class="card mx-5">
-
+        <div class="card-header">
+            <a style="text-decoration:none" href="{% url 'user_posts' post.author %}">&nbsp;{{ post.author }}</a>
+        </div>
         {% for image in image %}
-            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3"><br>
+            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">
         {% endfor %}
 
         <div class="media-body">
