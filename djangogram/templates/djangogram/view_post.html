@@ -8,14 +8,22 @@
 {% block content %}
     <div class="card mx-5">
         <div class="card-header">
+            {% for prof in profiles %}
+                {% if post.author == prof.user %}
+                    <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
+                {% endif %}
+            {% endfor %}
             <a style="text-decoration:none" href="{% url 'user_posts' post.author %}">&nbsp;{{ post.author }}</a>
         </div>
-        {% for image in image %}
-            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">
-        {% endfor %}
-
-        <div class="media-body">
-            <p class="card-text">{{ post.content|safe|linebreaks }}
+        <div class="card-body">
+            <div class="media">
+                {% for image in image %}
+                    <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">
+                {% endfor %}
+                <div class="media-body">
+                    <p class="card-text">{{ post.content|safe|linebreaks }}</p>
+                </div>
+            </div>
         </div>
         <div class="card-footer text-muted">
             {{ post.updated_at|date:"Y-m-d H:i:s" }}<br>

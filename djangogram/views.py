@@ -32,9 +32,10 @@ def get_user_posts(request, author):
 def get_tag_posts(request, tag):
     tag_id = Tag.objects.get(url=tag).id
     posts = Post.objects.filter(tags=tag_id).order_by('-updated_at')
-
+    profiles = Profile.objects.all()
     context = {
         'posts': posts,
+        'profiles': profiles
     }
     return render(request, "djangogram/index.html", context=context)
 
@@ -61,9 +62,11 @@ def view_post(request, post_id):
     # post_item = Post.objects.get(pk=post_id)
     post_item = get_object_or_404(Post, pk=post_id)
     image = Image.objects.filter(post_id=post_id)
+    profiles = Profile.objects.all()
     context = {
         'post': post_item,
         'image': image,
+        'profiles': profiles,
     }
     return render(request, template_name='djangogram/view_post.html', context=context)
 
