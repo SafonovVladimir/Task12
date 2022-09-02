@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
     {{ block.super }}
@@ -14,7 +15,8 @@
                         <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
                     {% endif %}
                 {% endfor %}
-                <a style="text-decoration:none" href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
+                <a style="text-decoration:none; color:black"
+                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">
                 <div class="media">
@@ -24,9 +26,17 @@
                     {% else %}
                         <img src="{{ item.post.get.image.url }}" alt="" width="500" class="mr-3">
                     {% endif %}
+                    {#                    {% for image in images %}#}
+                    {#                        {% if item.id == image.post_id %}#}
+                    {#                            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
+                    {#                        {% endif %}#}
+                    {#                    {% endfor %}#}
                     <div class="media-body">
-                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:20 }}
-                            <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
+                        {% block extrahead %}
+                            <script type="text/javascript" src="{% static 'js/jquery.js' %}">
+                                <p class="text">{{ item.content|safe|linebreaks }}
+                                <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p></script>
+                        {% endblock extrahead %}
                     </div>
                 </div>
             </div>

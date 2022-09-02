@@ -19,7 +19,11 @@
         {#            </div>#}
         {#        {% endfor %}#}
         <br>
-        <button type="submit">Add post</button>
+        <div class="form-group m-3">
+            <label>Upload images</label>
+            <input required name="images" type="file" multiple class="form-control-file">
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Add post</button>
     </form>
 
 {% endblock content %}

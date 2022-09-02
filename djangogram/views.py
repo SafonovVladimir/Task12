@@ -8,13 +8,15 @@ from .models import *
 
 
 def index(request):
-    posts = Post.objects.all().order_by('-updated_at')
-    profiles = Profile.objects.all()
+    posts = Post.objects.all().order_by('-updated_at').select_related('author')
+    profiles = Profile.objects.all().select_related('user')
+    images = Image.objects.all().select_related('post')
     user = request.user
     context = {
         'posts': posts,
         'user': user,
         'profiles': profiles,
+        'images': images,
     }
     return render(request, "djangogram/index.html", context=context)
 
@@ -22,9 +24,10 @@ def index(request):
 def get_user_posts(request, author):
     user_id = User.objects.get(username=author).id
     posts = Post.objects.filter(author=user_id).order_by('-updated_at')
-
+    profiles = Profile.objects.all()
     context = {
         'posts': posts,
+        'profiles': profiles,
     }
     return render(request, "djangogram/index.html", context=context)
 
@@ -35,7 +38,7 @@ def get_tag_posts(request, tag):
     profiles = Profile.objects.all()
     context = {
         'posts': posts,
-        'profiles': profiles
+        'profiles': profiles,
     }
     return render(request, "djangogram/index.html", context=context)
 
