@@ -8,6 +8,7 @@
         {% csrf_token %}
         {{ post.as_p }}
         {{ images.as_p }}
+        {{ tags.as_p }}
         {#        {% for field in post %}#}
         {#            <div class="form-group">#}
         {#                {{ field.name }}#}

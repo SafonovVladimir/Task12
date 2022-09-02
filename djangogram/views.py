@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm
+from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, AddTagForm
 from .models import *
 
 
@@ -100,25 +100,30 @@ def add_post(request):
     user = request.user
     if request.method == 'POST':
         post = AddPostForm(request.POST)
-        image = AddImageForm(request.POST)
-        # context = {
-        #     'post': post,
-        # }
+        image = AddImageForm(request.POST, request.FILES)
+        tag = AddTagForm(request.POST)
+        context = {
+            'post': post,
+        }
         if post.is_valid():
             instance = post.save(commit=False)
+            # t = tag.save(commit=False)
             instance.author = user
+            # instance.tags = Tag.objects.create()
             instance.save()
             im = image.save(commit=False)
-            im.post = instance.save()
+            im.post = instance
             im.save()
             messages.success(request, 'Success')
             return redirect('home')
     else:
         post = AddPostForm()
         images = AddImageForm()
+        tags = AddTagForm()
         context = {
             'post': post,
             'images': images,
+            'tags': tags
         }
     # images = Image.objects.all()
     return render(request, "djangogram/add_post.html", context=context)
