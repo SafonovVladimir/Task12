@@ -4,25 +4,24 @@
 
 {% block content %}
 
-    <form method="POST" enctype="multipart/form-data">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ post.as_p }}
-{#        {{ tag.as_p }}#}
-        {{ image.as_p }}
-        {#        {% for field in form %}#}
+        {{ images.as_p }}
+        {#        {% for field in post %}#}
         {#            <div class="form-group">#}
-        {#                {{ field.label_tag }}#}
-        {#                {{ field }}#}
+        {#                {{ field.name }}#}
+        {#                {{ field.content }}#}
         {#                <div class="invalid-feedback">#}
         {#                    {{ field.errors }}#}
         {#                </div>#}
         {#            </div>#}
         {#        {% endfor %}#}
         <br>
-        <div class="form-group m-3">
-            <label>Upload images</label>
-            <input required name="images" type="file" multiple class="form-control-file">
-        </div>
+{#        <div class="form-group m-3">#}
+{#            <label>Upload images</label>#}
+{#            <input required name="images" type="file" multiple class="form-control-file">#}
+{#        </div>#}
         <button type="submit" class="btn btn-primary m-3">Add post</button>
     </form>
 

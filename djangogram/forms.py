@@ -7,9 +7,8 @@ from django.contrib.auth.models import User
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['author', 'content']
+        fields = ['content', ]
         widgets = {
-            'author': forms.Select(attrs={"class": "form-control"}),
             'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
         }
 
@@ -26,8 +25,11 @@ class AddPostForm(forms.ModelForm):
 class AddImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ('post', )
         fields = ['image']
+        widgets = {
+            'content': forms.ImageField(),
+        }
+
 
 
 class UserLoginForm(AuthenticationForm):

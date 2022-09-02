@@ -2,7 +2,6 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-
 from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm
 from .models import *
 
@@ -98,26 +97,30 @@ def like_post(request):
 
 
 def add_post(request):
+    user = request.user
     if request.method == 'POST':
-        post = AddPostForm(request.POST, request.FILES, prefix='post')
-        image = AddImageForm(request.POST, request.FILES, prefix='image')
-        context = {
-            'post': post,
-            'image': image
-        }
-        if post.is_valid() and image.is_valid():
-            p = post.save()
-            image.cleaned_data['post'] = p
-            image.save()
+        post = AddPostForm(request.POST)
+        image = AddImageForm(request.POST)
+        # context = {
+        #     'post': post,
+        # }
+        if post.is_valid():
+            instance = post.save(commit=False)
+            instance.author = user
+            instance.save()
+            im = image.save(commit=False)
+            im.post = instance.save()
+            im.save()
             messages.success(request, 'Success')
             return redirect('home')
     else:
-        post = AddPostForm(prefix='post')
-        image = AddImageForm(prefix='image')
+        post = AddPostForm()
+        images = AddImageForm()
         context = {
             'post': post,
-            'image': image
+            'images': images,
         }
+    # images = Image.objects.all()
     return render(request, "djangogram/add_post.html", context=context)
 
 
