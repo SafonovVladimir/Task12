@@ -1,8 +1,8 @@
+import uuid
 from datetime import date
 from PIL import Image as Im
 from django.db import models
 from django.contrib.auth.models import User
-import uuid
 
 GENDER_CHOICES = (
     ('Male', 'Male'),
@@ -11,13 +11,19 @@ GENDER_CHOICES = (
 
 
 class Profile(models.Model):
+
+    def get_uniq_name(instance, filename):
+        extension = filename.split('.')[-1]
+        uniq_name = str(uuid.uuid4())[:8]
+        return f'photos/users/{uniq_name}.{extension}'
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Ім'я користувача")
     full_name = models.CharField("Повне ім'я", blank=True, max_length=150)
     e_mail = models.EmailField("E-mail")
     birthday = models.DateField("Дата народження", default=date.today, blank=True)
     gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, default=None)
     bio = models.TextField("Про себе", blank=True)
-    photo = models.ImageField('Фото', upload_to='photos/%Y/%m/%d', blank=True)
+    photo = models.ImageField('Фото', upload_to=get_uniq_name, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -66,18 +72,23 @@ LIKE_CHOISES = (
 
 
 class Image(models.Model):
+
+    def get_uniq_name(instance, filename):
+        extension = filename.split('.')[-1]
+        uniq_name = str(uuid.uuid4())[:8]
+        return f'photos/{uniq_name}.{extension}'
+
     post = models.ForeignKey(Post, verbose_name="Post", on_delete=models.CASCADE, related_name='post')
-    image = models.ImageField(upload_to='photos/%Y/%m/%d', verbose_name='Фото', blank=True)
+    image = models.ImageField(upload_to=get_uniq_name, verbose_name='Фото', blank=True)
 
     def save(
-        self, force_insert=False, force_update=False, using=None, update_fields=None
+            self, force_insert=False, force_update=False, using=None, update_fields=None
     ):
         super().save()
         img = Im.open(self.image.path)
         # resize
         if img.height != 1080 or img.width != 300:
             output_size = (1080, 1080)
-            # output_name = str(uuid.uuid4())
             img.thumbnail(output_size)
             img.save(self.image.path)
 
