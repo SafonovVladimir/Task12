@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static %}
 
 {% block title %}
     {{ block.super }}
@@ -31,11 +30,8 @@
                     {#                            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
                     {#                        {% endif %}#}
                     {#                    {% endfor %}#}
-                    <div class="media-body">
-                        <span class="crop">
-                                <p class="text">{{ item.content|safe|linebreaks }}
-                                <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
-                        </span>
+                    <div class="media-body">                        <p class="card-text">{{ item.content|safe|linebreaks|truncatewords:20 }}
+                            <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
                     </div>
                 </div>
             </div>
