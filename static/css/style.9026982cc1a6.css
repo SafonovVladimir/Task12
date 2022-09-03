@@ -1,0 +1,36 @@
+body {
+    background-color: #ffffff;
+    padding: 0 200px 10px 200px;
+}
+
+.errorlist {
+    color: red;
+}
+
+.buttonPositive {
+    background-color: green;
+    border: solid green 3px;
+}
+
+.buttonNegative {
+    background-color: red;
+    border: solid red 1px;
+}
+
+.test {
+    border: solid black 3px;
+}
+
+.img_row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 500px;
+    height: 400px;
+    align-content: space-between;
+}
+
+.round_photo {
+    border-radius: 100px;
+    box-shadow: 0 0 10px grey;
+}
