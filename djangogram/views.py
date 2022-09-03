@@ -6,7 +6,6 @@ from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, A
 from .models import *
 
 
-@login_required
 def index(request):
     posts = Post.objects.all().select_related('author')
     profiles = Profile.objects.all().select_related('user')
