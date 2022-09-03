@@ -19,11 +19,11 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Ім'я користувача")
     full_name = models.CharField("Повне ім'я", blank=True, max_length=150)
-    e_mail = models.EmailField("E-mail")
+    e_mail = models.EmailField("E-mail", blank=True)
     birthday = models.DateField("Дата народження", default=date.today, blank=True)
     gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, default=None)
-    bio = models.TextField("Про себе", blank=True)
-    photo = models.ImageField('Фото', upload_to=get_uniq_name, blank=True)
+    bio = models.TextField("Про себе", blank=True, null=True)
+    photo = models.ImageField('Фото', upload_to=get_uniq_name, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -59,6 +59,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Post"
         verbose_name_plural = "Posts"
+        ordering = ['-updated_at']
 
     @property
     def num_of_likes(self):

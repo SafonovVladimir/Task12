@@ -6,6 +6,7 @@ urlpatterns = [
     path('', index, name='home'),
     path('like/', like_post, name='like_post'),
     path('profile/<slug:username>', profile, name='user_profile'),
+    path('profile/edit/<slug:username>', edit_profile, name='edit_profile'),
     path('user/<slug:author>', get_user_posts, name='user_posts'),
     path('tags/<slug:tag>', get_tag_posts, name='tag_posts'),
     path('login/', user_login, name='login'),

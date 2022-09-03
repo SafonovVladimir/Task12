@@ -2,12 +2,13 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, AddTagForm
+from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, AddTagForm, CreateUserProfile
 from .models import *
 
 
+@login_required
 def index(request):
-    posts = Post.objects.all().order_by('-updated_at').select_related('author')
+    posts = Post.objects.all().select_related('author')
     profiles = Profile.objects.all().select_related('user')
     images = Image.objects.all().select_related('post')
     user = request.user
@@ -60,6 +61,23 @@ def profile(request, username):
         return render(request, 'djangogram/profile.html', context)
 
 
+def edit_profile(request, username):
+    # if username == str(request.user):
+    #     user = request.user
+    #     user_id = user.id
+    #     profile = Profile.objects.get(user=user_id)
+    #     posts = Post.objects.filter(author=user)
+    #     images = Image.objects.filter(post__author=user)
+    #
+    #     context = {
+    #         'user': user,
+    #         'profile': profile,
+    #         'posts': posts,
+    #         'images': images,
+    #     }
+    return render(request, 'djangogram/edit_profile.html')  # , context)
+
+
 def view_post(request, post_id):
     # post_item = Post.objects.get(pk=post_id)
     post_item = get_object_or_404(Post, pk=post_id)
@@ -101,7 +119,7 @@ def add_post(request):
     if request.method == 'POST':
         post = AddPostForm(request.POST)
         image = AddImageForm(request.POST, request.FILES)
-        tag = AddTagForm(request.POST)
+        # tag = AddTagForm(request.POST)
         context = {
             'post': post,
         }
@@ -119,11 +137,11 @@ def add_post(request):
     else:
         post = AddPostForm()
         images = AddImageForm()
-        tags = AddTagForm()
+        # tags = AddTagForm()
         context = {
             'post': post,
             'images': images,
-            'tags': tags
+            # 'tags': tags
         }
     # images = Image.objects.all()
     return render(request, "djangogram/add_post.html", context=context)
@@ -153,7 +171,7 @@ def register(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Success')
-            return redirect('home')
+            return redirect('edit_profile')
         else:
             messages.error(request, 'Error')
     else:

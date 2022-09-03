@@ -3,15 +3,15 @@
 
 {% block content %}
     <div class="row my-3 p-3">
-        <h1>This is the profile page for {{ user.username }}</h1>
+        <h1>Edit {{ user.username }} profile</h1>
     </div>
 
     <div>
         <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
         <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
         {% if user.id == profile.user.id %}
-            <a href="{% url 'edit_profile' profile.id %}">
-                <button class="btn btn-primary m-3">Edit Profile</button>
+            <a href="{% url 'edit_user_profile' profile.id %}">
+                <button class="button">Edit</button>
             </a>
         {% endif %}
     </div>
