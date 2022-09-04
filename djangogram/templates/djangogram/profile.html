@@ -23,19 +23,18 @@
     <p>{{ profile.bio }}</p>
     <br>
     <p><b>POSTS:</b></p>
-    <div class="img_row">
+    <div class="row-cols-1">
         {% for item in posts %}
             {% if item.post.all.count > 1 %}
                 <a href="../post/{{ item.pk }}">
-                    <img src="{{ item.post.first.image.url }}" alt="" width="250" class="mr-3"
+                    <img src="{{ item.post.first.image.url }}" alt="" width="205" class="mr-3"
                          style="vertical-align:middle;margin:10px 10px"></a>
             {% else %}
                 <a href="../post/{{ item.pk }}">
-                    <img src="{{ item.post.get.image.url }}" alt="" width=250" class="mr-3"
+                    <img src="{{ item.post.get.image.url }}" alt="" width=205" class="mr-3"
                          style="vertical-align:middle;margin:10px 10px"></a>
             {% endif %}
         {% endfor %}
     </div>
-
 
 {% endblock content %}

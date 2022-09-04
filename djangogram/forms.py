@@ -24,12 +24,16 @@ class AddTagForm(forms.ModelForm):
 
 
 class AddImageForm(forms.ModelForm):
+    image = forms.ImageField(
+        label='Image',
+        widget=forms.ClearableFileInput(attrs={'multiple': True}),
+        required=True
+    )
+
     class Meta:
         model = Image
         fields = ['image']
-        # widgets = {
-        #     'image': forms.ImageField(),
-        # }
+
 
 class CreateUserProfile(forms.ModelForm):
     class Meta:
@@ -43,6 +47,7 @@ class CreateUserProfile(forms.ModelForm):
             'bio': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
             'photo': forms.ImageField(),
         }
+
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={"class": "form-control"}))

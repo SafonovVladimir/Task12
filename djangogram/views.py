@@ -50,12 +50,13 @@ def profile(request, username):
         profile = Profile.objects.get(user=user_id)
         posts = Post.objects.filter(author=user)
         images = Image.objects.filter(post__author=user)
-
+        count_posts = range(0, posts.count(), 3)
         context = {
             'user': user,
             'profile': profile,
             'posts': posts,
             'images': images,
+            'count_posts': count_posts,
         }
         return render(request, 'djangogram/profile.html', context)
 
@@ -117,32 +118,26 @@ def add_post(request):
     user = request.user
     if request.method == 'POST':
         post = AddPostForm(request.POST)
-        image = AddImageForm(request.POST, request.FILES)
-        # tag = AddTagForm(request.POST)
+        images = request.FILES.getlist("image")
         context = {
             'post': post,
+            'images': images,
         }
         if post.is_valid():
             instance = post.save(commit=False)
-            # t = tag.save(commit=False)
             instance.author = user
-            # instance.tags = Tag.objects.create()
             instance.save()
-            im = image.save(commit=False)
-            im.post = instance
-            im.save()
+            for image in images:
+                Image.objects.create(post=instance, image=image)
             messages.success(request, 'Success')
             return redirect('home')
     else:
         post = AddPostForm()
         images = AddImageForm()
-        # tags = AddTagForm()
         context = {
             'post': post,
             'images': images,
-            # 'tags': tags
         }
-    # images = Image.objects.all()
     return render(request, "djangogram/add_post.html", context=context)
 
 
