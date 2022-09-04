@@ -21,7 +21,7 @@ class Profile(models.Model):
     full_name = models.CharField("Повне ім'я", blank=True, max_length=150)
     e_mail = models.EmailField("E-mail", blank=True)
     birthday = models.DateField("Дата народження", default=date.today, blank=True)
-    gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, default=None)
+    gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, null=True)
     bio = models.TextField("Про себе", blank=True, null=True)
     photo = models.ImageField('Фото', upload_to=get_uniq_name, null=True, blank=True)
 

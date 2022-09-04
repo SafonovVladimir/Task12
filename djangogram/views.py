@@ -161,24 +161,19 @@ def user_logout(request):
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
-        prof = CreateUserProfile(request.POST)
         context = {
             'form': form,
-            'prof': prof,
         }
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(user=form.username)
+            Profile.objects.create(user=form.instance)
             login(request, user)
-            messages.success(request, 'Success')
-            return redirect('edit_profile', username=form.username)
+            return redirect('home')
         else:
             messages.error(request, 'Error')
     else:
         form = UserRegisterForm()
-        prof = CreateUserProfile()
         context = {
             'form': form,
-            'prof': prof,
         }
     return render(request, 'djangogram/register.html', context=context)

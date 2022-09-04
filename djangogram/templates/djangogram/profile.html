@@ -7,7 +7,12 @@
     </div>
 
     <div>
-        <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
+        {% if profile.photo %}
+            <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
+        {% else %}
+            <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg" alt=""
+                 width="150" class="round_photo">
+        {% endif %}
         <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
         {% if user.id == profile.user.id %}
             <a href="{% url 'edit_profile' profile.id %}">
