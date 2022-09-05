@@ -6,8 +6,10 @@
 
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ post.as_p }}
-        {{ images.as_p }}
+{#        {{ post.as_p }}#}
+        <label class="form-label">Що у вас нового?</label>
+        {{ post.content }}
+        <br>{{ images.as_p }}
 {#        {{ tags.as_p }}#}
 
         <br>

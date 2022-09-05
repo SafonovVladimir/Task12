@@ -51,7 +51,7 @@ class Post(models.Model):
     content = models.TextField("Що у вас нового", blank=True)
     liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True,
                                    related_name='liked')
-    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='post_tags', blank=True)
+    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='posts', blank=True)
 
     def __str__(self):
         return str(self.pk)

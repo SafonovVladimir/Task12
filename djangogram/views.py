@@ -79,7 +79,6 @@ def edit_profile(request, username):
 
 
 def view_post(request, post_id):
-    # post_item = Post.objects.get(pk=post_id)
     post_item = get_object_or_404(Post, pk=post_id)
     image = Image.objects.filter(post_id=post_id)
     profiles = Profile.objects.all()
@@ -117,9 +116,9 @@ def like_post(request):
 def add_post(request):
     user = request.user
     if request.method == 'POST':
-        post = AddPostForm(request.POST, request.FILES)
+        post = AddPostForm(request.POST)
         images = request.FILES.getlist("image")
-        # tags = request.POST.get('tags')
+        tags = request.POST.get('tags')
         context = {
             'post': post,
             'images': images,
@@ -127,8 +126,9 @@ def add_post(request):
         if post.is_valid():
             instance = post.save(commit=False)
             instance.author = user
+            # for tag in tags:
+            #     instance.tags.add(tag)
             instance.save()
-            # Tag.objects.get_or_create(title=tags, url=tags[1:])
             for image in images:
                 Image.objects.create(post=instance, image=image)
             messages.success(request, 'Success')

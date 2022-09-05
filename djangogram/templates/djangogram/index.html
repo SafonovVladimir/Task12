@@ -11,7 +11,12 @@
             <div class="card-header">
                 {% for prof in profiles %}
                     {% if item.author == prof.user %}
-                        <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
+                        {% if prof.photo %}
+                            <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
+                        {% else %}
+                            <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                                 alt="" width="30" class="round_photo">
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
                 <a style="text-decoration:none; color:black"
@@ -32,7 +37,7 @@
                     {#                    {% endfor %}#}
                     <div class="media-body">
                         <p class="card-text">
-                                {{ item.content|safe|linebreaks|truncatewords:20 }}
+                            {{ item.content|safe|linebreaks|truncatewords:20 }}
                             <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
                     </div>
                 </div>
