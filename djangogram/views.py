@@ -117,8 +117,9 @@ def like_post(request):
 def add_post(request):
     user = request.user
     if request.method == 'POST':
-        post = AddPostForm(request.POST)
+        post = AddPostForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
+        # tags = request.POST.get('tags')
         context = {
             'post': post,
             'images': images,
@@ -127,6 +128,7 @@ def add_post(request):
             instance = post.save(commit=False)
             instance.author = user
             instance.save()
+            # Tag.objects.get_or_create(title=tags, url=tags[1:])
             for image in images:
                 Image.objects.create(post=instance, image=image)
             messages.success(request, 'Success')

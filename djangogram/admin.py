@@ -26,6 +26,7 @@ class ProfileAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ('id', 'author', 'created_at', 'updated_at', 'num_of_likes')
     list_display_links = ('id', 'author')
+    filter_horizontal = ['tags']
     search_fields = ('user',)
     save_on_top = True
 

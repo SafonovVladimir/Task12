@@ -10,7 +10,8 @@ class AddPostForm(forms.ModelForm):
         fields = ['content', 'tags']
         widgets = {
             'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            'tags': forms.CheckboxSelectMultiple(),
+            # 'tags': forms.CheckboxSelectMultiple(),
+            'tags': forms.SelectMultiple(attrs={"class": "form-control"}),
         }
 
 
