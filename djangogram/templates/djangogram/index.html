@@ -55,7 +55,7 @@
                     <b>{{ item.num_of_likes }} likes</b><br>
                 </form>
                 {% for tag in item.tags.all %}
-                    <a href="{% url 'tag_posts' tag.url %}">{{ tag.title }}</a>
+                    <a href="{% url 'tag_posts' tag.slug %}">{{ tag.name }}</a>
                 {% endfor %}
             </div>
         </div>

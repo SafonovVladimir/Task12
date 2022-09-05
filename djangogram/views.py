@@ -2,7 +2,9 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, AddTagForm, CreateUserProfile
+from taggit.models import Tag
+
+from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm
 from .models import *
 
 
@@ -31,13 +33,18 @@ def get_user_posts(request, author):
     return render(request, "djangogram/index.html", context=context)
 
 
-def get_tag_posts(request, tag):
-    tag_id = Tag.objects.get(url=tag).id
-    posts = Post.objects.filter(tags=tag_id).order_by('-updated_at')
+def get_tag_posts(request, tag_slug):
+    post = Post.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = post.filter(tags__in=[tag])
+
     profiles = Profile.objects.all()
     context = {
         'posts': posts,
         'profiles': profiles,
+        'tag': tag,
     }
     return render(request, "djangogram/index.html", context=context)
 
@@ -118,7 +125,6 @@ def add_post(request):
     if request.method == 'POST':
         post = AddPostForm(request.POST)
         images = request.FILES.getlist("image")
-        tags = request.POST.get('tags')
         context = {
             'post': post,
             'images': images,
@@ -126,8 +132,6 @@ def add_post(request):
         if post.is_valid():
             instance = post.save(commit=False)
             instance.author = user
-            # for tag in tags:
-            #     instance.tags.add(tag)
             instance.save()
             for image in images:
                 Image.objects.create(post=instance, image=image)

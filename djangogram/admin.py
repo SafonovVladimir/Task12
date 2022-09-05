@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from django_extensions.admin import ForeignKeyAutocompleteAdmin
 
 from .models import *
 
@@ -58,5 +57,4 @@ class LikeAdmin(admin.ModelAdmin):
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Image, ImageAdmin)
-admin.site.register(Tag)
 admin.site.register(Like, LikeAdmin)

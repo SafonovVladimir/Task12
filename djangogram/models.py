@@ -3,6 +3,7 @@ from datetime import date
 from PIL import Image as Im
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 GENDER_CHOICES = (
     ('Male', 'Male'),
@@ -32,16 +33,16 @@ class Profile(models.Model):
         verbose_name_plural = "Profiles"
 
 
-class Tag(models.Model):
-    title = models.CharField('Tag', max_length=50, blank=True)
-    url = models.SlugField(max_length=100, unique=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Tag"
-        verbose_name_plural = "Tags"
+# class Tag(models.Model):
+#     title = models.CharField('Tag', max_length=50, blank=True)
+#     url = models.SlugField(max_length=100, unique=True, blank=True)
+#
+#     def __str__(self):
+#         return self.title
+#
+#     class Meta:
+#         verbose_name = "Tag"
+#         verbose_name_plural = "Tags"
 
 
 class Post(models.Model):
@@ -51,7 +52,8 @@ class Post(models.Model):
     content = models.TextField("Що у вас нового", blank=True)
     liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True,
                                    related_name='liked')
-    tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='posts', blank=True)
+    tags = TaggableManager()
+    # tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='posts', blank=True)
 
     def __str__(self):
         return str(self.pk)
@@ -88,7 +90,7 @@ class Image(models.Model):
         super().save()
         img = Im.open(self.image.path)
         # resize
-        output_size = (100, 100)
+        output_size = (1080, 1080)
         img.thumbnail(output_size)
         img.save(self.image.path)
 

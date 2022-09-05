@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Tag, Image, Profile
+from .models import Post, Image, Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -10,17 +10,7 @@ class AddPostForm(forms.ModelForm):
         fields = ['content', 'tags']
         widgets = {
             'content': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            # 'tags': forms.CheckboxSelectMultiple(),
-            'tags': forms.SelectMultiple(attrs={"class": "form-control"}),
-        }
-
-
-class AddTagForm(forms.ModelForm):
-    class Meta:
-        model = Tag
-        fields = ['title']
-        widgets = {
-            'title': forms.TextInput(attrs={"class": "form-control"}),
+            'tags': forms.TextInput(attrs={"class": "form-control", "rows": 5}),
         }
 
 
