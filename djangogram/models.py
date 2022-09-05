@@ -88,10 +88,9 @@ class Image(models.Model):
         super().save()
         img = Im.open(self.image.path)
         # resize
-        if img.height != 1080 or img.width != 300:
-            output_size = (1080, 1080)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+        output_size = (100, 100)
+        img.thumbnail(output_size)
+        img.save(self.image.path)
 
     def __str__(self):
         return str(self.post)
