@@ -7,11 +7,7 @@
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ post.as_p }}
-{#        <label class="form-label">Що у вас нового?</label>#}
-{#        {{ post.content }}#}
-{#        {{ post.tags }}#}
         <br>{{ images.as_p }}
-{#        {{ tags }}#}
 
         <br>
         <button type="submit" class="btn btn-primary m-3">Add post</button>

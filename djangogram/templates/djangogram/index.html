@@ -6,59 +6,68 @@
 
 
 {% block content %}
-    {% for item in posts %}
-        <div class="card mx-5">
-            <div class="card-header">
-                {% for prof in profiles %}
-                    {% if item.author == prof.user %}
-                        {% if prof.photo %}
-                            <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
-                        {% else %}
-                            <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                                 alt="" width="30" class="round_photo">
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                <a style="text-decoration:none; color:black"
-                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
-            </div>
-            <div class="card-body">
-                <div class="media">
-                    {% if item.post.all.count > 1 %}
-                        <img src="{{ item.post.first.image.url }}" alt="" width="500" class="mr-3">
-                        <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
-                    {% else %}
-                        <img src="{{ item.post.get.image.url }}" alt="" width="500" class="mr-3">
-                    {% endif %}
-                    {#                    {% for image in images %}#}
-                    {#                        {% if item.id == image.post_id %}#}
-                    {#                            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
-                    {#                        {% endif %}#}
-                    {#                    {% endfor %}#}
-                    <div class="media-body">
-                        <p class="card-text">
-                            {{ item.content|safe|linebreaks|truncatewords:20 }}
-                            <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% for item in posts %}
+                    <div class="card mx-5">
+                        <div class="card-header">
+                            {% for prof in profiles %}
+                                {% if item.author == prof.user %}
+                                    {% if prof.photo %}
+                                        <img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
+                                    {% else %}
+                                        <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                                             alt="" width="30" class="round_photo">
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            <a style="text-decoration:none; color:black"
+                               href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="media">
+                                {% if item.post.all.count > 1 %}
+                                    <img src="{{ item.post.first.image.url }}" alt="" width="500" class="mr-3">
+                                    <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
+                                {% else %}
+                                    <img src="{{ item.post.get.image.url }}" alt="" width="500" class="mr-3">
+                                {% endif %}
+                                {#                    {% for image in images %}#}
+                                {#                        {% if item.id == image.post_id %}#}
+                                {#                            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
+                                {#                        {% endif %}#}
+                                {#                    {% endfor %}#}
+                                <div class="media-body">
+                                    <p class="card-text">
+                                        {{ item.content|safe|linebreaks|truncatewords:20 }}
+                                        <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            {{ item.updated_at|date:"Y-m-d H:i:s" }}<br>
+                            <form action="{% url 'like_post' %}" method="post" class="ui form">
+                                {% csrf_token %}
+                                <input type="hidden" name="post_id" value="{{ item.id }}">
+                                {% if user not in item.liked.all %}
+                                    <button class="buttonPositive" type="submit">Like</button>
+                                {% else %}
+                                    <button class="buttonNegative" type="submit">Unlike</button>
+                                {% endif %}
+                                <b>{{ item.num_of_likes }} likes</b><br>
+                            </form>
+                            {% for tag in item.tags.all %}
+                                <a href="{% url 'tag_posts' tag.slug %}">{{ tag.name }}</a>
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="card-footer text-muted">
-                {{ item.updated_at|date:"Y-m-d H:i:s" }}<br>
-                <form action="{% url 'like_post' %}" method="post" class="ui form">
-                    {% csrf_token %}
-                    <input type="hidden" name="post_id" value="{{ item.id }}">
-                    {% if user not in item.liked.all %}
-                        <button class="buttonPositive" type="submit">Like</button>
-                    {% else %}
-                        <button class="buttonNegative" type="submit">Unlike</button>
-                    {% endif %}
-                    <b>{{ item.num_of_likes }} likes</b><br>
-                </form>
-                {% for tag in item.tags.all %}
-                    <a href="{% url 'tag_posts' tag.slug %}">{{ tag.name }}</a>
+                    <br>
                 {% endfor %}
+            <div class="col">
+                TEST
+            </div>
             </div>
         </div>
-        <br>
-    {% endfor %}
+    </div>
 {% endblock %}

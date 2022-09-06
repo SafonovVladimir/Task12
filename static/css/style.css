@@ -1,26 +1,7 @@
-.text .show {
-    cursor: pointer;
-}
-
-.text .hide {
-    display: none;
-}
-
-.text.more .show {
-    cursor: auto;
-}
-
-.text.more .hide {
-    display: inline;
-}
-
-.text.more .crop {
-    display: none;
-}
-
 body {
     background-color: #ffffff;
-    padding: 0 200px 10px 200px;
+    /*padding: 0 200px 10px 200px;*/
+    padding: 0 0 0 0;
 }
 
 .errorlist {
@@ -53,4 +34,24 @@ body {
 .round_photo {
     border-radius: 100px;
     box-shadow: 0 0 10px grey;
+}
+
+.text .show {
+    cursor: pointer;
+}
+
+.text .hide {
+    display: none;
+}
+
+.text.more .show {
+    cursor: auto;
+}
+
+.text.more .hide {
+    display: inline;
+}
+
+.text.more .crop {
+    display: none;
 }
