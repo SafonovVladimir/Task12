@@ -76,25 +76,25 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Task12.wsgi.application'
 
-# db_config = dj_database_url.config(
-#     default='postgres://wpyindjezdaokr:9a68dcc2286670f88a23d08129f2042e44cf54b2c6db813334fe177fcc06322b@'
-#             'ec2-52-211-182-159.eu-west-1.compute.amazonaws.com:5432/d8fdehua5pbljp')
-# db_config['ATOMIC_REQUESTS'] = True
-#
-# DATABASES = {
-#     'default': db_config,
-# }
+db_config = dj_database_url.config(
+    default='postgres://wpyindjezdaokr:9a68dcc2286670f88a23d08129f2042e44cf54b2c6db813334fe177fcc06322b@'
+            'ec2-52-211-182-159.eu-west-1.compute.amazonaws.com:5432/d8fdehua5pbljp')
+db_config['ATOMIC_REQUESTS'] = True
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangogram',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '',
-    }
+    'default': db_config,
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'djangogram',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)

@@ -135,6 +135,7 @@ def add_post(request):
             instance.save()
             for image in images:
                 Image.objects.create(post=instance, image=image)
+            post.save_m2m()
             messages.success(request, 'Success')
             return redirect('home')
     else:
