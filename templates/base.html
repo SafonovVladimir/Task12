@@ -29,9 +29,10 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
-
-            {% block content %}CONTENT{% endblock %}
-
+            {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-3">
+            {% block content2 %}{% endblock %}
         </div>
 
     </div>
