@@ -12,12 +12,14 @@ def index(request):
     posts = Post.objects.all().select_related('author')
     profiles = Profile.objects.all().select_related('user')
     images = Image.objects.all().select_related('post')
+    users = User.objects.filter().order_by('-date_joined')
     user = request.user
     context = {
         'posts': posts,
         'user': user,
         'profiles': profiles,
         'images': images,
+        'users': users,
     }
     return render(request, "djangogram/index.html", context=context)
 
@@ -51,22 +53,36 @@ def get_tag_posts(request, tag_slug):
 
 @login_required
 def profile(request, username):
-    # if username == str(request.user):
-    #     user = request.user
-        user = User.objects.get(username=username)
-        user_id = user.id
-        profile = Profile.objects.get(user=user_id)
-        posts = Post.objects.filter(author=user)
-        images = Image.objects.filter(post__author=user)
-        count_posts = range(0, posts.count(), 3)
-        context = {
-            'user': user,
-            'profile': profile,
-            'posts': posts,
-            'images': images,
-            'count_posts': count_posts,
-        }
-        return render(request, 'djangogram/profile.html', context)
+    # is_following = True
+    user = User.objects.get(username=username)
+    user_id = user.id
+    profile = Profile.objects.get(user=user_id)
+
+    followers = profile.followers.all()
+    if len(followers) == 0:
+        is_following = False
+
+    for follower in followers:
+        if follower == request.user:
+            is_following = True
+            break
+        else:
+            is_following = False
+
+    number_of_followers = len(followers)
+    posts = Post.objects.filter(author=user)
+    images = Image.objects.filter(post__author=user)
+    count_posts = range(0, posts.count(), 3)
+    context = {
+        'user': user,
+        'profile': profile,
+        'posts': posts,
+        'images': images,
+        'count_posts': count_posts,
+        'number_of_followers': number_of_followers,
+        'is_following': is_following,
+    }
+    return render(request, 'djangogram/profile.html', context)
 
 
 def edit_profile(request, username):
@@ -190,6 +206,19 @@ def register(request):
     return render(request, 'djangogram/register.html', context=context)
 
 
+def add_followers(request, username):
+    user_id = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user_id)
+    profile.followers.add(request.user)
+    return redirect('user_profile', username)
+
+
+def remove_followers(request, username):
+    user_id = User.objects.get(username=username)
+    profile = Profile.objects.get(user=user_id)
+    profile.followers.remove(request.user)
+    return redirect('user_profile', username)
+
 # class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 #     model = Profile
 #     fields = ['full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo']
@@ -202,4 +231,3 @@ def register(request):
 #     def test_func(self):
 #         profile = self.get_object()
 #         return self.request.user == profile.user
-

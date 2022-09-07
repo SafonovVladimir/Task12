@@ -14,8 +14,10 @@
                  width="150" class="round_photo">
         {% endif %}
         <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
+        <b>&nbsp;&nbsp;&nbsp;Followers: </b>{{ number_of_followers }}
         {% if request.user == user %}
             <a href="{% url 'edit_profile' profile.user %}">
+                <br>
                 <button class="btn btn-primary m-3">Edit Profile</button>
             </a>
         {% endif %}
@@ -54,3 +56,20 @@
     </div>
 
 {% endblock content %}
+{% block content2 %}
+    {% if user != request.user %}
+        {% if is_following %}
+            <form method="POST" action="{% url 'remove_follower' user.username %}">
+                {% csrf_token %}
+                <br><br>
+                <button class="btn btn-outline-danger" type="submit">Unfollow</button>
+            </form>
+        {% else %}
+            <form method="POST" action="{% url 'add_follower' user.username %}">
+                {% csrf_token %}
+                <br><br>
+                <button class="btn btn-outline-success" type="submit">Follow</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}

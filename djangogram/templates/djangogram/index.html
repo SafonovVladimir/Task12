@@ -20,7 +20,7 @@
                     {% endif %}
                 {% endfor %}
                 <a style="text-decoration:none; color:black"
-{#                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>#}
+                        {#                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>#}
                    href="{% url 'user_profile' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">
@@ -49,9 +49,9 @@
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{ item.id }}">
                     {% if user not in item.liked.all %}
-                        <button class="buttonPositive" type="submit">Like</button>
+                        <button class="btn btn-outline-success" type="submit">Like</button>
                     {% else %}
-                        <button class="buttonNegative" type="submit">Unlike</button>
+                        <button class="btn btn-outline-danger" type="submit">Unlike</button>
                     {% endif %}
                     <b>{{ item.num_of_likes }} likes</b><br>
                 </form>
@@ -67,21 +67,22 @@
 {% block content2 %}
     <div class="card-mx-5">
         <b>Recommendations for you</b><br><br>
-        {% for item in posts %}
-            {% for prof in profiles %}
-                {% if item.author == prof.user %}
-                    {% if forloop.counter < 5 %}
-                         {% if prof.photo %}
-                            <p><img src="{{ prof.photo.url }}" alt="" width="30" class="round_photo">
-                        {% else %}
-                            <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                                 alt="" width="30" class="round_photo">
-                        {% endif %}
-                        <a style="text-decoration:none; color:black"
-                           href="{% url 'user_profile' item.author %}">&nbsp;{{ item.author }}</a></p>
+        {% for item in users %}
+            {% if item != request.user %}
+                {% if forloop.counter < 5 %}
+                    {% if item.profile.photo %}
+                        <p><img src="{{ item.profile.photo.url }}" alt="" width="30" class="round_photo">
+                            {% else %}
+                            {#                                <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"#}
+                            {#                                     alt="" width="30" class="round_photo">#}
+                        <p><img src="photos/no_photo.jpg" alt="" width="30" class="round_photo">
                     {% endif %}
+                <a style="text-decoration:none; color:black"
+                   href="{% url 'user_profile' item.username %}">&nbsp;{{ item.username }}</a></p>
                 {% endif %}
-            {% endfor %}
+                {#                    {% endif %}#}
+            {% endif %}
+            {#            {% endfor %}#}
         {% endfor %}
     </div>
 {% endblock %}
