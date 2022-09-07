@@ -41,17 +41,20 @@ class CreateUserProfile(forms.ModelForm):
 
 
 class UpdateUserProfile(forms.ModelForm):
+    photo = forms.ImageField(
+        widget=forms.FileInput(attrs={"id": "image_field"}))
+
     class Meta:
         model = Profile
         fields = ['full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo']
-        # widgets = {
-        #     'full_name': forms.TextInput(attrs={"class": "form-control"}),
-        #     'e_mail': forms.TextInput(attrs={"class": "form-control"}),
-        #     'birthday': forms.TextInput(attrs={"class": "form-control"}),
-        #     'gender': forms.TextInput(attrs={"class": "form-control"}),
-        #     'bio': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-        #     'photo': forms.TextInput(attrs={"class": "form-control"}),
-        # }
+        widgets = {
+            'full_name': forms.TextInput(attrs={"class": "form-control"}),
+            'e_mail': forms.TextInput(attrs={"class": "form-control"}),
+            'birthday': forms.DateInput(attrs={"class": "form-control"}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'bio': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+            # 'photo': forms.TextInput(attrs={"class": "form-control"}),
+        }
 
 
 class UserLoginForm(AuthenticationForm):

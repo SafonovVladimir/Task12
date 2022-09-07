@@ -74,16 +74,6 @@ class Image(models.Model):
     post = models.ForeignKey(Post, verbose_name="Post", on_delete=models.CASCADE, related_name='post')
     image = models.ImageField(upload_to=get_uniq_name, verbose_name='Фото', blank=True)
 
-    def save(
-            self, force_insert=False, force_update=False, using=None, update_fields=None
-    ):
-        super().save()
-        img = Im.open(self.image.path)
-        # resize
-        output_size = (1080, 1080)
-        img.thumbnail(output_size)
-        img.save(self.image.path)
-
     def __str__(self):
         return str(self.post)
 

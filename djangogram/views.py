@@ -222,6 +222,7 @@ def remove_followers(request, username):
     profile.followers.remove(request.user)
     return redirect('user_profile', username)
 
+
 def view_followers(request, username):
     user_id = User.objects.get(username=username).id
     followers = Profile.objects.get(user=user_id).followers.all()
@@ -229,6 +230,7 @@ def view_followers(request, username):
         'followers': followers,
     }
     return render(request, "djangogram/followers.html", context=context)
+
 
 def view_following(request, username):
     user_id = User.objects.get(username=username).id

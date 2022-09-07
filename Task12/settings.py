@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'debug_toolbar',
     'whitenoise.runserver_nostatic',
     'taggit',
@@ -147,6 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -159,8 +162,8 @@ CACHES = {
     }
 }
 
-# cloudinary.config(
-#     cloud_name="dwhehigeg",
-#     api_key="271944658343995",
-#     api_secret="kcqyJ-o3SqnfMKTgXOmRiFw59-I"
-# )
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dwhehigeg',
+    'API_KEY': '271944658343995',
+    'API_SECRET': 'kcqyJ-o3SqnfMKTgXOmRiFw59-I'
+}
