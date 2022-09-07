@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from taggit.models import Tag
 
-from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm
+from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, UpdateUserProfile
 from .models import *
 
 
@@ -51,8 +51,9 @@ def get_tag_posts(request, tag_slug):
 
 @login_required
 def profile(request, username):
-    if username == str(request.user):
-        user = request.user
+    # if username == str(request.user):
+    #     user = request.user
+        user = User.objects.get(username=username)
         user_id = user.id
         profile = Profile.objects.get(user=user_id)
         posts = Post.objects.filter(author=user)
@@ -69,20 +70,23 @@ def profile(request, username):
 
 
 def edit_profile(request, username):
-    # if username == str(request.user):
-    #     user = request.user
-    #     user_id = user.id
-    #     profile = Profile.objects.get(user=user_id)
-    #     posts = Post.objects.filter(author=user)
-    #     images = Image.objects.filter(post__author=user)
-    #
-    #     context = {
-    #         'user': user,
-    #         'profile': profile,
-    #         'posts': posts,
-    #         'images': images,
-    #     }
-    return render(request, 'djangogram/edit_profile.html')  # , context)
+    if request.method == 'POST':
+        form = UpdateUserProfile(request.POST, request.FILES, instance=request.user.profile)
+        context = {
+            'form': form,
+        }
+        if form.is_valid():
+            form.save()
+            return redirect('user_profile', username)
+        else:
+            messages.error(request, 'Error')
+    else:
+        form = UpdateUserProfile(instance=request.user.profile)
+        context = {
+            'form': form,
+            # 'profile': profile,
+        }
+    return render(request, 'djangogram/edit_profile.html', context=context)
 
 
 def view_post(request, post_id):
@@ -173,7 +177,7 @@ def register(request):
         }
         if form.is_valid():
             user = form.save()
-            Profile.objects.create(user=form.instance)
+            # Profile.objects.create(user=form.instance)
             login(request, user)
             return redirect('home')
         else:
@@ -184,3 +188,18 @@ def register(request):
             'form': form,
         }
     return render(request, 'djangogram/register.html', context=context)
+
+
+# class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+#     model = Profile
+#     fields = ['full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo']
+#     template_name = 'djangogram/edit_profile.html'
+#
+#     def get_success_url(self):
+#         username = self.kwargs['username']
+#         return reverse_lazy('profile', kwargs={'username': username})
+#
+#     def test_func(self):
+#         profile = self.get_object()
+#         return self.request.user == profile.user
+

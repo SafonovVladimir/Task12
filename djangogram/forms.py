@@ -40,6 +40,20 @@ class CreateUserProfile(forms.ModelForm):
         }
 
 
+class UpdateUserProfile(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo']
+        # widgets = {
+        #     'full_name': forms.TextInput(attrs={"class": "form-control"}),
+        #     'e_mail': forms.TextInput(attrs={"class": "form-control"}),
+        #     'birthday': forms.TextInput(attrs={"class": "form-control"}),
+        #     'gender': forms.TextInput(attrs={"class": "form-control"}),
+        #     'bio': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+        #     'photo': forms.TextInput(attrs={"class": "form-control"}),
+        # }
+
+
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={"class": "form-control"}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={"class": "form-control"}))

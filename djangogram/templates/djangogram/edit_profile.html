@@ -5,37 +5,11 @@
     <div class="row my-3 p-3">
         <h1>Edit {{ user.username }} profile</h1>
     </div>
-
-    <div>
-        <img src="{{ profile.photo.url }}" alt="" width="150" class="round_photo">
-        <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
-        {% if user.id == profile.user.id %}
-            <a href="{% url 'edit_user_profile' profile.id %}">
-                <button class="button">Edit</button>
-            </a>
-        {% endif %}
-    </div>
-    <br>
-    <p><b>{{ profile.full_name }}</b></p>
-    <p>{{ profile.e_mail }}</p>
-    <p>{{ profile.birthday }}</p>
-    <p>{{ profile.gender }}</p>
-    <p>{{ profile.bio }}</p>
-    <br>
-    <p><b>POSTS:</b></p>
-    <div class="img_row">
-        {% for item in posts %}
-            {% if item.post.all.count > 1 %}
-                <a href="../post/{{ item.pk }}">
-                    <img src="{{ item.post.first.image.url }}" alt="" width="250" class="mr-3"
-                         style="vertical-align:middle;margin:10px 10px"></a>
-            {% else %}
-                <a href="../post/{{ item.pk }}">
-                    <img src="{{ item.post.get.image.url }}" alt="" width=250" class="mr-3"
-                         style="vertical-align:middle;margin:10px 10px"></a>
-            {% endif %}
-        {% endfor %}
-    </div>
-
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn btn-success m-3">Save</button>
+    </form>
 
 {% endblock content %}

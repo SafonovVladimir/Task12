@@ -4,6 +4,8 @@ from PIL import Image as Im
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 GENDER_CHOICES = (
     ('Male', 'Male'),
@@ -25,24 +27,13 @@ class Profile(models.Model):
     gender = models.CharField("Стать", choices=GENDER_CHOICES, max_length=6, blank=True, null=True)
     bio = models.TextField("Про себе", blank=True, null=True)
     photo = models.ImageField('Фото', upload_to=get_uniq_name, null=True, blank=True)
+    followers = models.ManyToManyField(User, blank=True, related_name='followers')
 
     def __str__(self):
         return self.user.username
 
     class Meta:
         verbose_name_plural = "Profiles"
-
-
-# class Tag(models.Model):
-#     title = models.CharField('Tag', max_length=50, blank=True)
-#     url = models.SlugField(max_length=100, unique=True, blank=True)
-#
-#     def __str__(self):
-#         return self.title
-#
-#     class Meta:
-#         verbose_name = "Tag"
-#         verbose_name_plural = "Tags"
 
 
 class Post(models.Model):
@@ -53,7 +44,6 @@ class Post(models.Model):
     liked = models.ManyToManyField(User, verbose_name="Кількість лайків", default=None, blank=True,
                                    related_name='liked')
     tags = TaggableManager()
-    # tags = models.ManyToManyField(Tag, verbose_name='Tags', related_name='posts', blank=True)
 
     def __str__(self):
         return str(self.pk)
@@ -113,3 +103,21 @@ class Like(models.Model):
     class Meta:
         verbose_name = "Like"
         verbose_name_plural = "Likes"
+
+
+#
+# class UserFollowing(models.Model):
+#     user_id = models.ForeignKey("User", related_name="following", on_delete=models.PROTECT())
+#     following_user_id = models.ForeignKey("User", related_name="followers")
+#     created = models.DateTimeField(auto_now_add=True)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()

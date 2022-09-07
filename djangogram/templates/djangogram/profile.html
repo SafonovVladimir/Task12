@@ -14,21 +14,32 @@
                  width="150" class="round_photo">
         {% endif %}
         <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
-        {% if user.id == profile.user.id %}
-            <a href="{% url 'edit_profile' profile.id %}">
+        {% if request.user == user %}
+            <a href="{% url 'edit_profile' profile.user %}">
                 <button class="btn btn-primary m-3">Edit Profile</button>
             </a>
         {% endif %}
     </div>
     <br>
-    <p><b>{{ profile.full_name }}</b></p>
-    <p>{{ profile.e_mail }}</p>
-    <p>{{ profile.birthday }}</p>
-    <p>{{ profile.gender }}</p>
-    <p>{{ profile.bio }}</p>
+    {% if profile.full_name %}
+        <h5 class="py-4">{{ profile.full_name }}</h5>
+    {% endif %}
+    {% if profile.e_mail %}
+        <p class="py-1">{{ profile.e_mail }}</p>
+    {% endif %}
+    {% if profile.birthday %}
+        <p class="py-1">{{ profile.birthday }}</p>
+    {% endif %}
+    {% if profile.gender %}
+        <p class="py-1">{{ profile.gender }}</p>
+    {% endif %}
+    {% if profile.bio %}
+        <p class="py-1">{{ profile.bio }}</p>
+    {% endif %}
+
     <br>
-    <p><b>POSTS:</b></p>
-    <div class="row-cols-1">
+    <div class="justify-content-center"><b>POSTS:</b></div>
+    <div class="row-cols-1 justify-content-center">
         {% for item in posts %}
             {% if item.post.all.count > 1 %}
                 <a href="../post/{{ item.pk }}">

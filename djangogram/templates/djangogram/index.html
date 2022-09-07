@@ -20,7 +20,8 @@
                     {% endif %}
                 {% endfor %}
                 <a style="text-decoration:none; color:black"
-                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>
+{#                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>#}
+                   href="{% url 'user_profile' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">
                 <div class="media">
@@ -65,6 +66,7 @@
 
 {% block content2 %}
     <div class="card-mx-5">
+        <b>Recommendations for you</b><br><br>
         {% for item in posts %}
             {% for prof in profiles %}
                 {% if item.author == prof.user %}
@@ -76,7 +78,7 @@
                                  alt="" width="30" class="round_photo">
                         {% endif %}
                         <a style="text-decoration:none; color:black"
-                           href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a></p>
+                           href="{% url 'user_profile' item.author %}">&nbsp;{{ item.author }}</a></p>
                     {% endif %}
                 {% endif %}
             {% endfor %}
