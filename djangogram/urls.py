@@ -16,4 +16,6 @@ urlpatterns = [
     path('add_post/', add_post, name='add_post'),
     path('register/', register, name='register'),
     path('post/<int:post_id>', view_post, name='view_post'),
+    path('followers/<username>', view_followers, name='followers'),
+    path('following/<username>', view_following, name='following'),
 ]

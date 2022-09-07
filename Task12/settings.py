@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os.path
 from pathlib import Path
+
+import cloudinary
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -156,3 +159,9 @@ CACHES = {
         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
     }
 }
+
+cloudinary.config(
+    cloud_name="dwhehigeg",
+    api_key="271944658343995",
+    api_secret="kcqyJ-o3SqnfMKTgXOmRiFw59-I"
+)

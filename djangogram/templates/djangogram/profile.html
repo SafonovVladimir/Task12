@@ -14,7 +14,10 @@
                  width="150" class="round_photo">
         {% endif %}
         <b>&nbsp;&nbsp;&nbsp;{{ posts.count }}</b> posts
-        <b>&nbsp;&nbsp;&nbsp;Followers: </b>{{ number_of_followers }}
+        <a style="text-decoration:none; color:black" href="{% url 'followers' profile.user.username %}">
+            &nbsp;&nbsp;&nbsp;Followers: <b>{{ number_of_followers }}</b></a>
+        <a style="text-decoration:none; color:black" href="{% url 'following' profile.user.username %}">
+            &nbsp;&nbsp;&nbsp;Following: <b>{{ number_of_following }}</b></a>
         {% if request.user == user %}
             <a href="{% url 'edit_profile' profile.user %}">
                 <br>

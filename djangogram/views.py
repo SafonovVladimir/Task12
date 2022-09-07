@@ -53,10 +53,12 @@ def get_tag_posts(request, tag_slug):
 
 @login_required
 def profile(request, username):
-    # is_following = True
     user = User.objects.get(username=username)
     user_id = user.id
     profile = Profile.objects.get(user=user_id)
+
+    following = Profile.objects.filter(followers=user_id)
+    number_of_following = len(following)
 
     followers = profile.followers.all()
     if len(followers) == 0:
@@ -80,6 +82,7 @@ def profile(request, username):
         'images': images,
         'count_posts': count_posts,
         'number_of_followers': number_of_followers,
+        'number_of_following': number_of_following,
         'is_following': is_following,
     }
     return render(request, 'djangogram/profile.html', context)
@@ -218,6 +221,22 @@ def remove_followers(request, username):
     profile = Profile.objects.get(user=user_id)
     profile.followers.remove(request.user)
     return redirect('user_profile', username)
+
+def view_followers(request, username):
+    user_id = User.objects.get(username=username).id
+    followers = Profile.objects.get(user=user_id).followers.all()
+    context = {
+        'followers': followers,
+    }
+    return render(request, "djangogram/followers.html", context=context)
+
+def view_following(request, username):
+    user_id = User.objects.get(username=username).id
+    following = Profile.objects.filter(followers=user_id)
+    context = {
+        'following': following,
+    }
+    return render(request, "djangogram/following.html", context=context)
 
 # class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 #     model = Profile
