@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os.path
 from pathlib import Path
 
-import cloudinary
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -160,8 +159,8 @@ CACHES = {
     }
 }
 
-cloudinary.config(
-    cloud_name="dwhehigeg",
-    api_key="271944658343995",
-    api_secret="kcqyJ-o3SqnfMKTgXOmRiFw59-I"
-)
+# cloudinary.config(
+#     cloud_name="dwhehigeg",
+#     api_key="271944658343995",
+#     api_secret="kcqyJ-o3SqnfMKTgXOmRiFw59-I"
+# )
