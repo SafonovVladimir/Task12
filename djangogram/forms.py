@@ -53,7 +53,6 @@ class UpdateUserProfile(forms.ModelForm):
             'birthday': forms.DateInput(attrs={"class": "form-control"}),
             'gender': forms.Select(attrs={'class': 'form-control'}),
             'bio': forms.Textarea(attrs={"class": "form-control", "rows": 5}),
-            # 'photo': forms.TextInput(attrs={"class": "form-control"}),
         }
 
 
