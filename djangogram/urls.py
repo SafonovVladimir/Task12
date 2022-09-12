@@ -18,4 +18,6 @@ urlpatterns = [
     path('post/<int:post_id>', view_post, name='view_post'),
     path('followers/<username>', view_followers, name='followers'),
     path('following/<username>', view_following, name='following'),
+    path('validate_username/', validate_username, name='validate_username'),
+    path('check_username/', check_username, name='check_username'),
 ]

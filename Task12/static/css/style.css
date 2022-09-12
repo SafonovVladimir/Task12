@@ -55,3 +55,11 @@ body {
 .text.more .crop {
     display: none;
 }
+
+.morecontent span {
+    display: none;
+}
+
+.morelink {
+    display: block;
+}

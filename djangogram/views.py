@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from taggit.models import Tag
+from django.http import JsonResponse
 
 from .forms import UserLoginForm, UserRegisterForm, AddPostForm, AddImageForm, UpdateUserProfile
 from .models import *
@@ -240,15 +241,20 @@ def view_following(request, username):
     }
     return render(request, "djangogram/following.html", context=context)
 
-# class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-#     model = Profile
-#     fields = ['full_name', 'e_mail', 'birthday', 'gender', 'bio', 'photo']
-#     template_name = 'djangogram/edit_profile.html'
-#
-#     def get_success_url(self):
-#         username = self.kwargs['username']
-#         return reverse_lazy('profile', kwargs={'username': username})
-#
-#     def test_func(self):
-#         profile = self.get_object()
-#         return self.request.user == profile.user
+
+def validate_username(request):
+    """Check available name"""
+    username = request.GET.get('username', None)
+    response = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(response)
+
+def check_username(request):
+    """Check name"""
+    username = request.GET.get('username', None)
+    response = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(response)
+

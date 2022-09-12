@@ -14,4 +14,32 @@
         <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
 
+    {% block javascript %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#id_username').keyup(function () {
+                    $.ajax({
+                        data: $(this).serialize(),
+                        url: "{% url 'check_username' %}",
+                        success: function (response) {
+                            if (response.is_taken == true) {
+                                $('#id_username').removeClass('is-invalid').addClass('is-valid');
+                            } else {
+                                $('#id_username').removeClass('is-valid').addClass('is-invalid');
+                                $('#usernameError').remove();
+
+                            }
+                        },
+                        error: function (response) {
+                            console.log(response.responseJSON.errors)
+                        }
+                    });
+                    return false;
+                });
+            })
+        </script>
+    {% endblock javascript %}
+
 {% endblock %}
