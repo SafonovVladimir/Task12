@@ -14,8 +14,8 @@ def index(request):
     profiles = Profile.objects.all().select_related('user')
     images = Image.objects.all().select_related('post')
     users = User.objects.filter().order_by('-date_joined')
-    length = len(images)
-    count_of_images = range(len(images))
+    # length = len(images)
+    # count_of_images = range(len(images))
     user = request.user
     context = {
         'posts': posts,
@@ -23,8 +23,8 @@ def index(request):
         'profiles': profiles,
         'images': images,
         'users': users,
-        'length': length,
-        'count': count_of_images,
+        # 'length': length,
+        # 'count': count_of_images,
     }
     return render(request, "djangogram/index.html", context=context)
 
