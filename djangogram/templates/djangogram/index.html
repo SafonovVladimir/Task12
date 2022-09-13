@@ -20,7 +20,6 @@
                     {% endif %}
                 {% endfor %}
                 <a style="text-decoration:none; color:black"
-                        {#                   href="{% url 'user_posts' item.author %}">&nbsp;{{ item.author }}</a>#}
                    href="{% url 'user_profile' item.author %}">&nbsp;{{ item.author }}</a>
             </div>
             <div class="card-body">
@@ -48,8 +47,6 @@
                     <div class="media-body">
                         <p class="card-text">
                         <div class="more">{{ item.content }}</div>
-                        {#                            {{ item.content|safe|linebreaks|truncatewords:20 }}#}
-                        {#                            <a style="text-decoration:none" href="/post/{{ item.pk }}">більше</a></p>#}
                     </div>
                 </div>
             </div>
