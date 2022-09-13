@@ -31,11 +31,20 @@
                     {% else %}
                         <img src="{{ item.post.get.image.url }}" alt="" width="500" class="mr-3">
                     {% endif %}
-                    {#                    {% for image in images %}#}
-                    {#                        {% if item.id == image.post_id %}#}
-                    {#                            <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
-                    {#                        {% endif %}#}
-                    {#                    {% endfor %}#}
+                    {#                    <div class="slideshow-container">#}
+                    {#                        {% for image in images %}#}
+                    {#                            {% if item.id == image.post_id %}#}
+                    {#                                {{ item.count }}#}
+                    {#                                {% if item.image.all .count.all > 1 %}#}
+                    {#                                    <div class="mySlides">#}
+                    {#                                        <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">#}
+                    {#                                    </div>#}
+                    {#                                {% endif %}#}
+                    {#                            {% endif %}#}
+                    {#                        {% endfor %}#}
+                    {#                        <a class="prev" onclick="plusSlides(-1)" style="text-decoration:none">&#10094;</a>#}
+                    {#                        <a class="next" onclick="plusSlides(1)" style="text-decoration:none">&#10095;</a>#}
+                    {#                    </div>#}
                     <div class="media-body">
                         <p class="card-text">
                         <div class="more">{{ item.content }}</div>

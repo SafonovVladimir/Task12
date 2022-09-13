@@ -36,6 +36,7 @@ body {
     box-shadow: 0 0 10px grey;
 }
 
+/* Show Hide Text container */
 .text .show {
     cursor: pointer;
 }
@@ -62,4 +63,68 @@ body {
 
 .morelink {
     display: block;
+}
+
+/* Slideshow container */
+* {
+    box-sizing: border-box
+}
+
+.slideshow-container {
+    max-width: 500px;
+    position: relative;
+    margin: auto;
+}
+
+.mySlides {
+    display: none;
+}
+
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    user-select: none;
+    border-radius: 50%;
+}
+
+.next {
+    right: 0;
+    border-radius: 50%;
+}
+
+.dot {
+    cursor: pointer;
+    height: 6px;
+    width: 6px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+.fade {
+    animation-name: fade;
+    animation-duration: 0.1s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+    to {
+        opacity: 1
+    }
 }

@@ -23,9 +23,24 @@
         </div>
         <div class="card-body">
             <div class="media">
-                {% for image in image %}
-                    <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">
-                {% endfor %}
+                {% if length > 1 %}
+                    <div class="slideshow-container">
+                        {% for image in images %}
+                            <div class="mySlides">
+                                <img src="{{ image.image.url }}" alt="" width="500" class="mr-3">
+                            </div>
+                        {% endfor %}
+                        <a class="prev" onclick="plusSlides(-1)" style="text-decoration:none">&#10094;</a>
+                        <a class="next" onclick="plusSlides(1)" style="text-decoration:none">&#10095;</a>
+                    </div>
+                    <div style="text-align:center">
+                        {% for num in count %}
+                            <span class="dot" onclick="currentSlide(num)"></span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <img src="{{ images.get.image.url }}" alt="" width="500" class="mr-3">
+                {% endif %}
                 <div class="media-body">
                     <p class="card-text">{{ post.content|safe|linebreaks }}</p>
                 </div>
