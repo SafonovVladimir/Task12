@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'whitenoise.runserver_nostatic',
     'taggit',
+    'social_django',
 
     'djangogram.apps.DjangogramConfig',
 ]
@@ -73,6 +74,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -155,15 +158,18 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': os.path.join(BASE_DIR, 'django_cache'),
-#     }
-# }
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dwhehigeg',
     'API_KEY': '271944658343995',
     'API_SECRET': 'kcqyJ-o3SqnfMKTgXOmRiFw59-I'
 }
+
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
