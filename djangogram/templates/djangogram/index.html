@@ -25,12 +25,14 @@
             </div>
             <div class="card-body">
                 <div class="media">
-                    {% if item.post.all.count > 1 %}
-                        <img src="{{ item.post.first.image.url }}" alt="" style="width:90%" class="mr-3">
-                        <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
-                    {% else %}
-                        <img src="{{ item.post.get.image.url }}" alt="" style="width:90%" class="mr-3">
-                    {% endif %}
+                    <a href="../post/{{ item.pk }}">
+                        {% if item.post.all.count > 1 %}
+                            <img src="{{ item.post.first.image.url }}" alt="" style="width:90%" class="mr-3">
+                            <img src="{{ item.post.last.image.url }}" alt="" width="50" class="mr-3">
+                        {% else %}
+                            <img src="{{ item.post.get.image.url }}" alt="" style="width:90%" class="mr-3">
+                        {% endif %}
+                    </a>
                     <div class="media-body">
                         <p class="card-text">
                         <div class="more">{{ item.content }}</div>
@@ -64,10 +66,10 @@
                     </div>
                 </form>
                 <b>TAGS:</b>
-                    {% for tag in item.tags.all %}
-                        <a href="{% url 'tag_posts' tag.slug %}">{{ tag.name }}</a>
-                    {% endfor %}
-                    <br>{{ item.updated_at|date:"Y-m-d H:i:s" }}
+                {% for tag in item.tags.all %}
+                    <a href="{% url 'tag_posts' tag.slug %}">{{ tag.name }}</a>
+                {% endfor %}
+                <br>{{ item.updated_at|date:"Y-m-d H:i:s" }}
             </div>
         </div>
         <br>
