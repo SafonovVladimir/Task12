@@ -77,22 +77,24 @@
 {% endblock %}
 
 {% block content2 %}
-    <div class="card-mx-5">
-        <b>Recommendations for you</b><br><br>
-        {% for item in users %}
-            {% if item != request.user %}
-                {% if forloop.counter < 5 %}
-                    {% if item.profile.photo %}
-                        <p><img src="{{ item.profile.photo.url }}" alt="" width="30" class="round_photo">
-                    {% else %}
-                        <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                             alt="" width="30" class="round_photo">
+    {% if request.user.is_authenticated %}
+        <div class="card-mx-5">
+            <b>Recommendations for you</b><br><br>
+            {% for item in users %}
+                {% if item != request.user %}
+                    {% if forloop.counter < 5 %}
+                        {% if item.profile.photo %}
+                            <p><img src="{{ item.profile.photo.url }}" alt="" width="30" class="round_photo">
+                        {% else %}
+                            <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+                                 alt="" width="30" class="round_photo">
+                        {% endif %}
+                    <a style="text-decoration:none; color:black"
+                       href="{% url 'user_profile' item.username %}">&nbsp;{{ item.username }}</a>
+                    </p>
                     {% endif %}
-                <a style="text-decoration:none; color:black"
-                   href="{% url 'user_profile' item.username %}">&nbsp;{{ item.username }}</a>
-                </p>
                 {% endif %}
-            {% endif %}
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
