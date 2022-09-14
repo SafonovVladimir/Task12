@@ -22,10 +22,10 @@ $(document).ready(function () {
             },
             success: function (response) {
                 if (trim === 'Unlike') {
-                    $(`.like-btn${post_id}`).text('Like').removeClass('"btn btn-success like-btn{{ item.id }}').addClass('btn btn-danger like-btn{{ item.id }}');
+                    $(`.like-btn${post_id}`).text('Like').removeClass('"btn btn-danger like-btn{{ item.id }}').addClass('btn btn-success like-btn{{ item.id }}');
                     res = trimCount - 1
                 } else {
-                    $(`.like-btn${post_id}`).text('Unlike').removeClass('"btn btn-danger like-btn{{ item.id }}').addClass('btn btn-success like-btn{{ item.id }}');
+                    $(`.like-btn${post_id}`).text('Unlike').removeClass('"btn btn-success like-btn{{ item.id }}').addClass('btn btn-danger like-btn{{ item.id }}');
                     res = trimCount + 1
                 }
                 $(`.like-count${post_id}`).text(res)
