@@ -210,4 +210,4 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #     'social_core.pipeline.social_auth.load_extra_data',
 #     'social_core.pipeline.user.user_details',
 # )
-SOCIAL_AUTH_SLUGIFY_USERNAMES = False
+SOCIAL_AUTH_CLEAN_USERNAMES = True
