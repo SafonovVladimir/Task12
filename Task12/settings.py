@@ -210,7 +210,6 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
 )
-SOCIAL_AUTH_PIPELINE += ('social_core.pipeline.save_profile',)
 SOCIAL_AUTH_CLEAN_USERNAMES = True
 
 
@@ -220,3 +219,5 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
         # The main part is how to get the profile picture URL and then do what you need to do
         Profile.objects.filter(user=user).update(
             imageUrl=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
+
+SOCIAL_AUTH_PIPELINE += ('social_core.pipeline.save_profile',)
