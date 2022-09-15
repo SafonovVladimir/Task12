@@ -174,8 +174,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'kcqyJ-o3SqnfMKTgXOmRiFw59-I'
 }
 
-# SOCIAL_AUTH_JSONFIELD_ENABLED = True
-
 SOCIAL_AUTH_JSONFIELD_ENABLED = True
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '466429154851-dq747907pad6onub56h0nh7edisjcor7.apps.googleusercontent.com'
@@ -212,3 +210,4 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #     'social_core.pipeline.social_auth.load_extra_data',
 #     'social_core.pipeline.user.user_details',
 # )
+SOCIAL_AUTH_SLUGIFY_USERNAMES = False
