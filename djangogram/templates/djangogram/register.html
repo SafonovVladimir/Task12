@@ -15,12 +15,12 @@
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
     <div class="inline-group">
-        <br><a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-social-icon btn-google-plus"><i
-            class="fa fa-google-plus"></i>Google
+        <br><a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-block btn-social btn-google">
+        <span class="fa fa-google"></span>Sign in with Google
     </a>
-        <a href="{% url "social:begin" "github" %}" class="btn btn-social-icon btn-github"><i
-            class="fa fa-github"></i>GitHub
-    </a>
+        <a href="{% url "social:begin" "github" %}" class="btn btn-block btn-social btn-github">
+            <span class="fa fa-github"></span>Sign in with GitHub
+        </a>
     </div>
 
 
