@@ -13,7 +13,17 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary btn-block">Login</button>
     </form>
-
+    <div class="inline-group">
+        <br><a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-block btn-social btn-google">
+        <span class="fa fa-google"></span>Sign in with Google
+    </a>
+        <a href="{% url "social:begin" "github" %}" class="btn btn-block btn-social btn-github">
+            <span class="fa fa-github"></span>Sign in with GitHub
+        </a>
+        <a href="{% url "social:begin" "facebook" %}" class="btn btn-block btn-social btn-facebook">
+            <span class="fa fa-facebook"></span>Sign in with Facebook
+        </a>
+    </div>
     {% block javascript %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

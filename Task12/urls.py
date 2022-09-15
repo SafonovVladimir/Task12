@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('djangogram.urls')),
-    path('', include('social_django.urls', namespace='social')),
+    path('oauth/', include('social_django.urls', namespace='social')),
     # path('logout/', logout, {'next_page': settings.LOGOUT_REDIRECT_URL},
     #      name='logout'),
 ]
