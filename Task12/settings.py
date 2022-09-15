@@ -188,11 +188,11 @@ SOCIAL_AUTH_GITHUB_KEY = 'ae94db50ea95e3ba945c'
 SOCIAL_AUTH_GITHUB_SECRET = '39ab34d40ac7ead52a2c521db38844025cc725c4'
 SOCIAL_AUTH_GITHUB_SCOPE = ['read:user', 'user:email']
 
-LOGIN_URL = '/login/google-oauth2/'
-# LOGIN_URL = 'login/'
-# LOGOUT_URL = 'logout/'
-# LOGIN_REDIRECT_URL = '/'
-# LOGOUT_REDIRECT_URL = '/'
+# LOGIN_URL = '/login/google-oauth2/'
+LOGIN_URL = 'login/'
+LOGOUT_URL = 'logout/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
