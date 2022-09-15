@@ -14,7 +14,15 @@
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary btn-block">Register</button>
     </form>
-    <br><a href="{% url "social:begin" "google-oauth2" %}">Google+</a>
+    <div class="inline-group">
+        <br><a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-social-icon btn-google-plus"><i
+            class="fa fa-google-plus"></i>Google
+    </a>
+        <a href="{% url "social:begin" "github" %}" class="btn btn-social-icon btn-github"><i
+            class="fa fa-github"></i>GitHub
+    </a>
+    </div>
+
 
     {% block javascript %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

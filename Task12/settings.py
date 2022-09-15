@@ -170,12 +170,18 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.open_id.OpenIdAuth',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.github.GithubOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
 )
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '466429154851-dq747907pad6onub56h0nh7edisjcor7.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+
+SOCIAL_AUTH_GITHUB_KEY = 'ae94db50ea95e3ba945c'
+SOCIAL_AUTH_GITHUB_SECRET = '39ab34d40ac7ead52a2c521db38844025cc725c4'
+# SOCIAL_AUTH_GITHUB_SCOPE = ['user:email']
+
 LOGIN_URL = '/login/google-oauth2/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
