@@ -220,4 +220,4 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
         Profile.objects.filter(user=user).update(
             imageUrl=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
 
-SOCIAL_AUTH_PIPELINE += ('social_core.pipeline.user.save_profile',)
+SOCIAL_AUTH_PIPELINE += ('social_core.pipeline.social_auth.save_profile',)
