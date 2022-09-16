@@ -242,8 +242,8 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
         except HTTPError:
             pass
         else:
-            profile = user.get_profile()
-            profile.profile_photo.save(f'{user.username}_social.jpg', ContentFile(response.content))
+            profile = user.profile
+            profile.photo.save(f'{user.username}_social.jpg', ContentFile(response.content))
             profile.save()
 
 
