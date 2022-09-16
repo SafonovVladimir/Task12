@@ -135,7 +135,7 @@ def like_post(request):
         post_id = request.POST.get('post_id')
         post_obj = Post.objects.get(pk=post_id)
 
-        #other method
+        # other method
         # profile = Profile.objects.get(user=user)
 
         # if profile in post_obj.liked.all():
@@ -290,6 +290,7 @@ def validate_username(request):
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
     return JsonResponse(response)
+
 
 def check_username(request):
     """Check name"""

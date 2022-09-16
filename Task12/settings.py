@@ -183,7 +183,7 @@ SOCIAL_AUTH_FACEBOOK_KEY = '5814701555287225'
 SOCIAL_AUTH_FACEBOOK_SECRET = '3259bb40ef62dc90445da421b4590b69'
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-   'fields': 'id, name, email, age_range'
+    'fields': 'id, name, email, age_range'
 }
 # SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 
@@ -199,12 +199,14 @@ LOGOUT_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-# def save_profile(backend, user, response, is_new=False, *args, **kwargs):
-#     from djangogram.models import Profile
-#     if is_new and backend.name == "facebook":
-#         # The main part is how to get the profile picture URL and then do what you need to do
-#         Profile.objects.filter(user=user).update(
-#             imageUrl=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
+
+def save_profile(backend, user, response, is_new=False, *args, **kwargs):
+    from djangogram.models import Profile
+    if is_new and backend.name == "facebook":
+        # The main part is how to get the profile picture URL and then do what you need to do
+        Profile.objects.filter(user=user).update(
+            imageUrl=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
+
 
 SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
@@ -216,9 +218,9 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
-    # 'social_core.pipeline.social_auth.save_profile',
+    'Task12.settings.save_profile',
 )
-SOCIAL_AUTH_CLEAN_USERNAMES = True
 
+SOCIAL_AUTH_CLEAN_USERNAMES = True
 
 # SOCIAL_AUTH_PIPELINE += ('social_core.pipeline.social_auth.save_profile',)
