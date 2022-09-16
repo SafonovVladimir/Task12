@@ -233,8 +233,12 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
     from requests import request, HTTPError
     from django.core.files.base import ContentFile
 
-    if is_new and backend.name == 'facebook':
-        url = f'https://graph.facebook.com/v15.0/{response["id"]}/picture?access_token={response["access_token"]}'
+    if is_new:
+        if backend.name == 'facebook':
+            url = f'https://graph.facebook.com/v15.0/{response["id"]}/picture?access_token={response["access_token"]}'
+
+        elif backend.name == 'github':
+            url = f'https://avatars.githubusercontent.com/u/{response["id"]}?v=4'
 
         try:
             response = request('GET', url, params={'type': 'large'})
@@ -243,7 +247,7 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
             pass
         else:
             profile = user.profile
-            profile.photo.save(f'{user.username}_social.jpg', ContentFile(response.content))
+            profile.photo.save(f'{str(uuid.uuid4())[:8]}.jpg', ContentFile(response.content))
             profile.save()
 
 
