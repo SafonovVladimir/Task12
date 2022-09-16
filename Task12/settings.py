@@ -215,7 +215,7 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
 
     if is_new and backend.name == "facebook":
 
-        picture_url = f'https://graph.facebook.com/v15.0/{response["id"]}/picture?access_token={response["access_token"]}'
+        picture_url = f'https://graph.facebook.com/v15.0/5755311231198384/picture?access_token=EABSocLSthLkBAKffswgifT8ss7tQAD82iNymFxRSTHhy2etENRnMDC9D53xC1ZA7dRYAO1qea6TvhF7gmTQN9ZB5IM26vnWqnHmd6gq7ZCZCPaXH4hJTmZASvtFeqKXXIIVHiW76wJOayRm9ZBW7vzQTij2AL1ta9EemVAefob4SjhSvXGv4W9gZApomyiwkEudzxW6qKaH5ZAwIH7MhBeQA'
 
         file_name = f'{str(uuid.uuid4())[:8]}.jpeg'
         resp = requests.get(picture_url)
