@@ -227,13 +227,24 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #             prof = Profile.objects.get(user=user)
 #             prof.photo.save(file_name, files.File(fp))
 #             prof.save()
+
 def save_profile(backend, user, response, is_new=False, *args, **kwargs):
     from djangogram.models import Profile
+    from requests import request, HTTPError
+    from django.core.files.base import ContentFile
 
-    if is_new and backend.name == "facebook":
-    #The main part is how to get the profile picture URL and then do what you need to do
-        Profile.objects.filter(user=user).update(
-            photo=f'https://graph.facebook.com/v15.0/{response["id"]}/picture?access_token={response["access_token"]}')
+    if is_new and backend.name == 'facebook':
+        url = f'https://graph.facebook.com/v15.0/{response["id"]}/picture?access_token={response["access_token"]}'
+
+        try:
+            response = request('GET', url, params={'type': 'large'})
+            response.raise_for_status()
+        except HTTPError:
+            pass
+        else:
+            profile = user.get_profile()
+            profile.profile_photo.save(f'{user.username}_social.jpg', ContentFile(response.content))
+            profile.save()
 
 
 SOCIAL_AUTH_PIPELINE = (
