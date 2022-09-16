@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os.path
+import uuid
 from pathlib import Path
 
 import dj_database_url
@@ -206,6 +207,25 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 #         # The main part is how to get the profile picture URL and then do what you need to do
 #         Profile.objects.filter(user=user).update(
 #             photo=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
+def save_profile(backend, user, response, is_new=False, *args, **kwargs):
+    import requests
+    from io import BytesIO
+    from django.core import files
+    from djangogram.models import Profile
+
+    if is_new and backend.name == "facebook":
+
+        picture_url = f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}'
+
+        file_name = f'{str(uuid.uuid4())[:8]}.jpeg'
+        resp = requests.get(picture_url)
+
+        if resp.status_code == requests.codes.ok:
+            fp = BytesIO()
+            fp.write(resp.content)
+            prof = Profile.objects.get(user=user)
+            prof.photo.save(file_name, files.File(fp))
+            prof.save()
 
 
 SOCIAL_AUTH_PIPELINE = (
@@ -218,7 +238,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
-    # 'Task12.settings.save_profile',
+    'Task12.settings.save_profile',
 )
 
 SOCIAL_AUTH_CLEAN_USERNAMES = True
