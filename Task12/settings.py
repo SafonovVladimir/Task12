@@ -205,7 +205,7 @@ def save_profile(backend, user, response, is_new=False, *args, **kwargs):
     if is_new and backend.name == "facebook":
         # The main part is how to get the profile picture URL and then do what you need to do
         Profile.objects.filter(user=user).update(
-            imageUrl=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
+            photo=f'https://graph.facebook.com/{response["id"]}/picture/?type=large&access_token={response["access_token"]}')
 
 
 SOCIAL_AUTH_PIPELINE = (
